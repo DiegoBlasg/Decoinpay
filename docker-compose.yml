@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  react-app:
+    container_name: react-app
+    build: ./frontend
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    logging:
+      driver: none
+  api-server:
+    container_name: api-server
+    build: ./backend
+    ports:
+      - "4000:4000"
+    links:
+      - mongo
+    environment:
+      - MONGODB_URI=mongodb://mongo/cryptopagosdb
+      - PORT=4000
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    logging:
+      driver: none
