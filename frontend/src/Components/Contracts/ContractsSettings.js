@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import useContract from "./useContracts";
 
 export default function ContractsSettings(props) {
     const contract_id = useParams().id;
     const { contracts, allowed_users, getOneContract, deleteAllowed_user } = useContract(contract_id);
-
+    const [search, setSearch] = useState("");
 
     function getShortID() {
         let contractID = contracts.contract.contract_id + "";
         return contractID.substring(0, 5) + "..." + contractID.substring(contractID.length - 4, contractID.length)
     }
+
+    const filteredAllowed_users = allowed_users.allowed_user.filter((allowed_user) =>
+        allowed_user.alias.toLowerCase().includes(search.toLowerCase()) ||
+        allowed_user.wallet_id.toLowerCase().includes(search.toLowerCase())
+    )
 
     React.useEffect(() => {
         getOneContract();
@@ -37,7 +42,7 @@ export default function ContractsSettings(props) {
             <h3 className="text-primary text-center pb-3">Carteras Autorizadas: {allowed_users.allowed_user.length}</h3>
             <div className="row pb-4 pt-2">
                 <form className="d-flex">
-                    <input className="form-control me-2" style={{ height: "40px" }} type="search" placeholder="Search" aria-label="Search" />
+                    <input className="form-control me-2" style={{ height: "40px" }} onChange={e => setSearch(e.target.value)} type="search" placeholder="Search" aria-label="Search" />
                     <button className="btn btn-primary text-white" type="submit">Search</button>
                 </form>
                 <div className="table-responsive">
@@ -45,7 +50,7 @@ export default function ContractsSettings(props) {
                     <table className="table table-dark table-borderless mt-3">
                         <tbody>
                             {
-                                allowed_users.allowed_user.map(allowed_user => (
+                                filteredAllowed_users.map(allowed_user => (
                                     <tr style={{ height: "55px" }} key={allowed_user._id}>
                                         <th style={{ whiteSpace: "nowrap" }} className="text-center">{allowed_user.alias}</th>
                                         <td style={{ whiteSpace: "nowrap" }} className="text-center"><Link to={'/ModifyAllowedUser/' + contract_id + '/' + allowed_user._id}><i className="bi bi-pencil-square text-primary fs-3" /></Link></td>
