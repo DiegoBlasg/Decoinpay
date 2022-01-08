@@ -1,77 +1,150 @@
 const usersCtrl = {};
 
 const User = require('../models/User')
+const CryptoJs = require('crypto-js')
 
 
-usersCtrl.getUsers = async (req, res) => {
-    const users = await User.find();
-    res.json(users);
+const decryptText = (text) => {
+    const bytes = CryptoJs.AES.decrypt(text, process.env.PORT || "4321")
+    const textoDescifrado = bytes.toString(CryptoJs.enc.Utf8)
+    return textoDescifrado.toLowerCase()
 }
 
-usersCtrl.getOnlyOneUser = async (req, res) => {
-    const user = await User.findById(req.params.id);
-    res.json(user);
+usersCtrl.getUsersAdmin = async (req, res) => {
+    if ((process.env.ADMINPASSWORD || "9876") == decryptText(req.header('Wallet'))) {
+        const users = await User.find();
+        res.json(users);
+    }
 }
-
-usersCtrl.getAdded_tokens = async (req, res) => {
-    const user = await User.findById(req.params.id);
-    res.json(user.added_tokens);
-}
-
-usersCtrl.getFavourites_tokens = async (req, res) => {
-    const user = await User.findById(req.params.id);
-    res.json(user.favourites_tokens);
+usersCtrl.getOnlyOneUserAdmin = async (req, res) => {
+    if ((process.env.ADMINPASSWORD || "9876") == decryptText(req.header('Wallet'))) {
+        const user = await User.findOne({ wallet_id: req.params.wallet });
+        res.json(user);
+    }
 }
 
 usersCtrl.createUser = async (req, res) => {
-    const { business_user, wallet_id } = req.body;
-    const newUser = new User({
-        wallet_id,
-        business_user
-    });
-    await newUser.save();
-    res.json({ message: 'User created' });
+    if ((process.env.ADMINPASSWORD || "9876") == decryptText(req.header('Wallet'))) {
+        const { business_user, wallet_id } = req.body;
+        const newUser = new User({
+            wallet_id: decryptText(wallet_id),
+            business_user
+        });
+        await newUser.save();
+        res.json({ message: 'User created' });
+    }
 }
 
-usersCtrl.deleteUser = async (req, res) => {
-    const user = await User.findByIdAndDelete(req.params.id);
+usersCtrl.getOnlyOneUser = async (req, res) => {
+    const user = await User.findOne({ wallet_id: decryptText(req.header('Wallet')) });
+    res.json(user);
+}
+
+/*usersCtrl.deleteUser = async (req, res) => {
+    await User.findOneAndDelete({ wallet_id: decryptText(req.header('Wallet')) });
     res.json({ message: 'user eliminado' });
+}*/
+
+usersCtrl.getFavouritesTokens = async (req, res) => {
+    const user = await User.findOne({ wallet_id: decryptText(req.header('Wallet')) });
+    res.json(user.favourites_tokens);
 }
 
-usersCtrl.NewTokenFavourite = async (req, res) => {
+usersCtrl.newFavouriteToken = async (req, res) => {
     const { token_id } = req.body;
-    await User.findByIdAndUpdate(req.params.id, {
-        $push: {
-            favourites_tokens: token_id
+    const user = await User.findOne({ wallet_id: decryptText(req.header('Wallet')) })
+    let isDuplicated = false
+    if (user.favourites_tokens) {
+        for (let i = 0; i < user.favourites_tokens.length; i++) {
+            if (user.favourites_tokens[i] == token_id) {
+                isDuplicated = true
+            }
         }
-    });
-    res.json({ message: 'Token added to favourite' });
+    }
+    if (!isDuplicated) {
+        await User.findOneAndUpdate({ wallet_id: decryptText(req.header('Wallet')) }, {
+            $push: {
+                favourites_tokens: token_id
+            }
+        });
+        res.json({ message: 'Token added to favourite' });
+    } else {
+        res.status(490).json({ mensaje: "Este token ya esta añadido" });
+    }
 }
 
 usersCtrl.deleteFavouriteToken = async (req, res) => {
-    await User.findByIdAndUpdate(req.params.id, {
+    await User.findOneAndUpdate({ wallet_id: decryptText(req.header('Wallet')) }, {
         $pull: { favourites_tokens: req.params.token }
     }
     );
     res.json({ message: 'Favourite Token Delete' });
 }
 
-usersCtrl.NewAdded_token = async (req, res) => {
+usersCtrl.getAdded_tokens = async (req, res) => {
+    const user = await User.findOne({ wallet_id: decryptText(req.header('Wallet')) });
+    res.json(user.added_tokens);
+}
+
+usersCtrl.newAdded_token = async (req, res) => {
     const { token_contract } = req.body;
-    await User.findByIdAndUpdate(req.params.id, {
-        $push: {
-            added_tokens: token_contract
+    const user = await User.findOne({ wallet_id: decryptText(req.header('Wallet')) })
+    let isDuplicated = false
+    if (user.added_tokens) {
+        for (let i = 0; i < user.added_tokens.length; i++) {
+            if (user.added_tokens[i] == token_contract) {
+                isDuplicated = true
+            }
         }
-    });
-    res.json({ message: 'Token added' });
+    }
+    if (!isDuplicated) {
+        await User.findOneAndUpdate({ wallet_id: decryptText(req.header('Wallet')) }, {
+            $push: {
+                added_tokens: token_contract
+            }
+        });
+        res.json({ message: 'Token added' });
+    } else {
+        res.status(493).json({ mensaje: "Este token ya esta añadido" });
+    }
 }
 
 usersCtrl.deleteAdded_token = async (req, res) => {
-    await User.findByIdAndUpdate(req.params.id, {
+    await User.findOneAndUpdate({ wallet_id: decryptText(req.header('Wallet')) }, {
         $pull: { added_tokens: req.params.contract }
     }
     );
     res.json({ message: 'Token Delete' });
 }
+
+
+usersCtrl.getContratWithAccess = async (req, res) => {
+    const user = await User.findOne({ wallet_id: decryptText(req.header('Wallet')) });
+    res.json(user.contracts_with_acces);
+}
+
+usersCtrl.newContratWithAccess = async (req, res) => {
+    const { contracts_with_acces } = req.body;
+    await User.findOneAndUpdate({ wallet_id: decryptText(req.header('Wallet')) }, {
+        $push: {
+            contracts_with_acces: contracts_with_acces
+        }
+    });
+    res.json({ message: 'contract with acces added' });
+}
+
+usersCtrl.deleteContratWithAccess = async (req, res) => {
+    await User.findOneAndUpdate({ wallet_id: decryptText(req.header('Wallet')) }, {
+        $pull: { contracts_with_acces: req.params.contract }
+    }
+    );
+    res.json({ message: 'contract with acces Delete' });
+}
+
+usersCtrl.getTransactions = async (req, res) => {
+    const user = await User.findOne({ wallet_id: decryptText(req.header('Wallet')) });
+    res.json(user.transactions);
+}
+
 
 module.exports = usersCtrl;

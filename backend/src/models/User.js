@@ -20,6 +20,10 @@ const nodeSchema = new Schema({
             txn_fee: { type: String, require: true }
         }
     ],
+    contracts_with_acces: [{
+        type: String,
+        require: true,
+    }],
     added_tokens: [{
         type: String,
         require: true

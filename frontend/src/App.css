@@ -45,3 +45,22 @@ input:checked + .slider:before {
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
+
+
+.chart{
+  vertical-align: middle;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  display: inline-block;
+
+}
+p {
+  text-align: center;
+  font-family:'Verdana', sans-serif;
+  font-size: 10px;
+}
+
+canvas{
+  height: 100%;
+}

@@ -1,10 +1,6 @@
 const { Schema, model } = require('mongoose')
 
 const nodeSchema = new Schema({
-    contract_id: {
-        type: String,
-        require: true
-    },
     wallet_id: {
         type: String,
         require: true

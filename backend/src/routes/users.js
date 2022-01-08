@@ -1,30 +1,43 @@
 const { Router } = require('express');
-const { getUsers, createUser, deleteUser, getOnlyOneUser, NewTokenFavourite, deleteFavouriteToken, NewAdded_token, deleteAdded_token, getAdded_tokens, getFavourites_tokens } = require('../controllers/users.controllers')
+const { getUsersAdmin, getOnlyOneUserAdmin, createUser, getOnlyOneUser, deleteUser, newFavouriteToken, deleteFavouriteToken,
+    newAdded_token, getAdded_tokens, deleteAdded_token, getFavouritesTokens, newContratWithAccess, getContratWithAccess,
+    deleteContratWithAccess, getTransactions } = require('../controllers/users.controllers')
 
 const router = Router();
 
+router.route('/admin')
+    .get(getUsersAdmin)
+
+router.route('/admin/:wallet')
+    .get(getOnlyOneUserAdmin)
+
 router.route('/')
-    .get(getUsers)
-    .post(createUser)
-
-router.route('/:id')
-    .delete(deleteUser)
     .get(getOnlyOneUser)
-    .put(NewTokenFavourite)
+    .post(createUser)
+//.delete(deleteUser)
 
-router.route('/:id/:token')
+router.route('/favouritetoken')
+    .get(getFavouritesTokens)
+    .put(newFavouriteToken)
+
+router.route('/favouritetoken/:token')
     .delete(deleteFavouriteToken)
 
-router.route('/othertoken/:id/:contract')
+router.route('/addedtoken')
+    .get(getAdded_tokens)
+    .put(newAdded_token)
+
+router.route('/addedtoken/:contract')
     .delete(deleteAdded_token)
 
-router.route('/othertoken/:id/')
-    .put(NewAdded_token)
+router.route('/contratwithaccess')
+    .get(getContratWithAccess)
+    .put(newContratWithAccess)
 
-router.route('/addedtokens/:id/')
-    .get(getAdded_tokens)
+router.route('/contratwithaccess/:contract')
+    .delete(deleteContratWithAccess)
 
-router.route('/favouritestokens/:id/')
-    .get(getFavourites_tokens)
+router.route('/transactions')
+    .get(getTransactions)
 
 module.exports = router;
