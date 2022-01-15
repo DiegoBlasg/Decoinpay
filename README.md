@@ -43,5 +43,15 @@ reflejados en dicho contrato, y lo de usuarios permitidos es para que más usuar
 * Sistema de búsquedas de contratos y monedas.
 * Una versión de desarrollo del sistema de usuarios, poder crear, elegir, y cerrar sesión.
 * Añadir y quitar monedas a favoritos.
-* Poder añadir tokens externos, por ejemplo **0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82**.
+* Poder añadir tokens externos, por ejemplo **0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82**
 * Restricción y redirección de urls si el usuario no está conectado.
+
+## Pre Alfa 3
+* Nuevo sistema de usuarios que funciona con metamask (cartera virtual de criptomonedas), es necesario descargar metamask (es una extensión del buscador), las cuentas de metamask actúan como cuentas en la página.
+* Se ha añadido una página para ver la información básica de una criptomoneda y su gráfica, pinchando en su nombre.
+* Restricción de rutas cuando un usuario entra en un contrato que no es suyo, intenta modificarlo...
+* Se ha añadido un sistema de seguridad en la api.
+* Arreglo y reestructuración de código
+* Se puede ver el balance de la moneda global de la blockchain en la que estés conectado con metamask, en la página de cuenta.
+* Ahora aparecen los contratos a los que tienes acceso, y sólo se puede ver la información de ellos.
+* Se han arreglado fallos como poder añadir usuarios permitidos duplicados en los contratos, poder añadirte a ti mismo…
