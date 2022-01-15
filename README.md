@@ -55,3 +55,18 @@ reflejados en dicho contrato, y lo de usuarios permitidos es para que más usuar
 * Se puede ver el balance de la moneda global de la blockchain en la que estés conectado con metamask, en la página de cuenta.
 * Ahora aparecen los contratos a los que tienes acceso, y sólo se puede ver la información de ellos.
 * Se han arreglado fallos como poder añadir usuarios permitidos duplicados en los contratos, poder añadirte a ti mismo…
+## Pre Alfa 4
+A Partir de la siguiente actualización, los cambios se podrán ver en el apartado de issues y no en el README, por otra parte la siguiente actualización ya será la versión alfa de la aplicación y tiene una duración de desarrollo prevista de 2 semanas.
+Los cambios de esta pequeña actualización antes de la alfa son los siguientes:
+
+* En la anterior pre alfa no funcionaba el inicio de sesión de usuario cuando montabas el docker-compose debido a una variable mal puesta, en esta pre alfa se ha arreglado
+* Los formularios y los alerts de cuando eliminas algo se han cambiado por modales para un mejor diseño
+
+* Se han arreglado errores como:
+    * Ahora los imput tienen un maxLength para evitar nombres grandes
+    * Antes cuando estabas en un móvil no funcionaba la calculadora de precios, ahora si funciona
+
+* Mejora la legibilidad del código
+* Se ha añadido el botón de recibir pagos en los contratos
+* Se ha añadido el botón de mandar pago en la pestaña de Cuenta
+
