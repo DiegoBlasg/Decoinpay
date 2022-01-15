@@ -69,7 +69,7 @@ export default function CoinInfo(props) {
     }
 
     useEffect(() => {
-        const funcion = async () => {
+        const getCoinInfo = async () => {
             const coindata = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${contract_id}&order=market_cap_desc&per_page=100&page=1&sparkline=false`)
             setCoin(coindata.data[0])
 
@@ -85,7 +85,7 @@ export default function CoinInfo(props) {
             setLabel(coindates)
 
         }
-        funcion()
+        getCoinInfo()
     }, [])
     return (
         <div className="container bg-dark my-5 p-4 pt-4 rounded shadow-lg">
@@ -118,7 +118,7 @@ export default function CoinInfo(props) {
                                 <h4 className="text-white mx-2">{coin.symbol ? coin.symbol.toUpperCase() : ""}</h4>
                             </div>
                             <div className="d-flex align-items-center justify-content-center">
-                                <input type="number" className="form-control bg-dark text-white mx-2" />
+                                <input type="number" id="bit" className="form-control bg-dark text-white mx-2" onKeyUp={(e) => cambiardolarvalor(e.target.value)} />
                             </div>
                             <div className="d-flex align-items-center justify-content-center">
                                 <i className="bi bi-arrow-left-right text-white fs-3 my-4" style={{ marginRight: "50px", marginLeft: "30px" }}></i>
@@ -128,7 +128,7 @@ export default function CoinInfo(props) {
                                 <h4 className="text-white mx-2">USD</h4>
                             </div>
                             <div className="d-flex align-items-center justify-content-center mb-3">
-                                <input type="number" className="form-control bg-dark text-white mx-2" />
+                                <input type="number" id="dol" className="form-control bg-dark text-white mx-2" onKeyUp={(e) => cambiarcoinvalor(e.target.value)} />
                             </div>
                         </div>
                         <div className="row my-5 shadow p-3 mb-5 bg-dark rounded" onClick={() => cambiarvalor()}>

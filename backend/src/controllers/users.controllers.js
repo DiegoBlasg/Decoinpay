@@ -5,7 +5,7 @@ const CryptoJs = require('crypto-js')
 
 
 const decryptText = (text) => {
-    const bytes = CryptoJs.AES.decrypt(text, process.env.PORT || "4321")
+    const bytes = CryptoJs.AES.decrypt(text, process.env.PASSWORD || "4321")
     const textoDescifrado = bytes.toString(CryptoJs.enc.Utf8)
     return textoDescifrado.toLowerCase()
 }

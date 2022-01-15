@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import UserContext from '../../../../Context/User/UserContext';
 import ContractsCreated from './ContractsCreated';
 import ContractsWithAcces from './ContractsWithAcces';
@@ -8,7 +8,7 @@ export default function ContractsCards(props) {
 
     return (
         <div>
-            <ContractsCreated search={props.search} isPhone={props.isPhone} />
+            <ContractsCreated search={props.search} isPhone={props.isPhone} modalIsOpen={props.modalIsOpen} setIsOpen={props.setIsOpen} />
 
             {
                 selectedUser ?
@@ -18,6 +18,7 @@ export default function ContractsCards(props) {
                     :
                     <></>
             }
+
         </div>
 
 

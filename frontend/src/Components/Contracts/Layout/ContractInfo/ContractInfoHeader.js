@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import useContract from "../../Hooks/useContracts";
 
 export default function ContractInfoHeader(props) {
 
@@ -9,7 +8,7 @@ export default function ContractInfoHeader(props) {
     const shortID = contractID.substring(0, 5) + "..." + contractID.substring(contractID.length - 4, contractID.length)
 
     const [isChecked, setIsChecked] = useState(false);
-    function handleChange() {
+    const handleChange = () => {
         setIsChecked(!isChecked)
     }
 
@@ -34,17 +33,9 @@ export default function ContractInfoHeader(props) {
                         }
                     </div>
                 </div>
-                <div className="row mx-3 mt-3">
-                    <p className="text-white text-center" style={{ fontSize: "18px" }}>transacciones en pantalla</p>
-                </div>
-                <div className="row mx-3">
-                    <div className="col col-4 offset-4 d-flex justify-content-center">
-                        <label className="switch">
-                            <input type="checkbox" value={isChecked} onChange={handleChange} />
-                            <div className="slider"></div>
-                        </label>
-
-                    </div>
+                <div className="row pt-3 px-5 text-primary fs-1 text-center" style={{ cursor: "pointer" }}>
+                    <i className="bi bi-box-arrow-in-down-right"></i>
+                    <h5>Recibir pago</h5>
                 </div>
             </>
             :
@@ -66,17 +57,10 @@ export default function ContractInfoHeader(props) {
                         }
                     </div>
                 </div>
-                <div className="row mx-3 mt-3">
-                    <p className="text-white text-center" style={{ fontSize: "18px" }}>Ver transacciones en pantalla completa</p>
-                </div>
-                <div className="row mx-3">
-                    <div className="col col-4 offset-4 d-flex justify-content-center">
-                        <label className="switch">
-                            <input type="checkbox" value={isChecked} onChange={handleChange} />
-                            <div className="slider"></div>
-                        </label>
 
-                    </div>
+                <div className="row pt-3 px-5 text-primary fs-1 text-center" style={{ cursor: "pointer" }}>
+                    <i className="bi bi-box-arrow-in-down-right"></i>
+                    <h5>Recibir pago</h5>
                 </div>
             </>
 

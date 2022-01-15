@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useContext, useState } from 'react';
 import UserContext from '../../../Context/User//UserContext'
 
-const useContract = (url_id, url_idau) => {
+const useContract = (url_id) => {
     const { selectedUser, encryptText } = useContext(UserContext);
     const [contracts, setContracts] = useState([]);
     const [oneContractInArray, setOneContractInArray] = useState([]);
@@ -79,7 +79,6 @@ const useContract = (url_id, url_idau) => {
                 name: name
             }
             await axios.post('http://localhost:4000/contracts', newContract, axiosConfig)
-            window.location.href = '/contracts'
         }
     }
 
@@ -96,7 +95,7 @@ const useContract = (url_id, url_idau) => {
                     name: name,
                 }
                 await axios.put('http://localhost:4000/contracts/' + url_id, updateContract, axiosConfig)
-                window.location.href = '/ajustes/' + url_id
+                //window.location.reload()
             }
         } catch (error) {
             alert("No puedes modificar este contrato")
@@ -111,37 +110,25 @@ const useContract = (url_id, url_idau) => {
                     "wallet": selectedUser.wallet_id
                 }
             };
-            const res = await axios.get('http://localhost:4000/contracts/' + id, axiosConfig)
-            let opcion = window.confirm(
-                "¿Esta seguro que desea eliminar el siguiente contrato: " + res.data.name + " con el id " + res.data.wallet_id + " ?"
-            );
-            if (opcion === true) {
-                const contract = await axios.get('http://localhost:4000/contracts/' + id, axiosConfig)
-                for (let i = 0; i < contract.data.allowed_users.length; i++) {
-                    await axios.delete('http://localhost:4000/users/contratwithaccess/' + id, { headers: { "wallet": encryptText(contract.data.allowed_users[i].wallet_id) } })
-                }
-                await axios.delete('http://localhost:4000/contracts/' + id, axiosConfig)
+            const contract = await axios.get('http://localhost:4000/contracts/' + id, axiosConfig)
+            for (let i = 0; i < contract.data.allowed_users.length; i++) {
+                await axios.delete('http://localhost:4000/users/contratwithaccess/' + id, { headers: { "wallet": encryptText(contract.data.allowed_users[i].wallet_id) } })
             }
-            getContracts();
+            await axios.delete('http://localhost:4000/contracts/' + id, axiosConfig)
+            getContracts()
         }
     }
 
     //deleteAllowed_user is here because it need a function from here
-    const deleteAllowed_user = async (id, wallet, alias) => {
+    const deleteAllowed_user = async (id, wallet) => {
         if (selectedUser) {
-            let opcion = window.confirm(
-                "¿Esta seguro que desea eliminar el siguiente usuario de la lista: " + alias + " con la cartera " + wallet + " ?"
-            );
-            if (opcion === true) {
-                const axiosConfig = {
-                    headers: {
-                        "wallet": selectedUser.wallet_id
-                    }
-                };
-                await axios.delete('http://localhost:4000/contracts/alloweduser/' + url_id + "/" + id, axiosConfig)
-                await axios.delete('http://localhost:4000/users/contratwithaccess/' + url_id, { headers: { "wallet": encryptText(wallet.toLowerCase()) } })
-            }
-            getOneContract();
+            const axiosConfig = {
+                headers: {
+                    "wallet": selectedUser.wallet_id
+                }
+            };
+            await axios.delete('http://localhost:4000/contracts/alloweduser/' + url_id + "/" + id, axiosConfig)
+            await axios.delete('http://localhost:4000/users/contratwithaccess/' + url_id, { headers: { "wallet": encryptText(wallet.toLowerCase()) } })
         }
     }
 

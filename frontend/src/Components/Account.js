@@ -32,18 +32,24 @@ export default function Account(props) {
           <div className="row pt-4 d-flex justify-content-center">
             <h3 className="text-white text-center mx-2">TRASANCCIONES</h3>
           </div>
+
+          <div className="row text-primary fs-2 text-center" style={{ cursor: "pointer" }}>
+            <i className="bi bi-arrow-up-right"></i>
+            <h5>Enviar pago</h5>
+          </div>
         </>
         :
         <>
           <div className="row pt-4">
-            <div className="col col-2">
-              <span className="border border-warning text-warning mx-2 p-2" style={{ whiteSpace: "nowrap" }}>Balance: {balance} ETH</span>
+            <div className="col col-2  d-flex align-items-center justify-content-center">
+              <span className="border border-warning text-warning p-2" style={{ whiteSpace: "nowrap" }}>Balance: {balance} ETH</span>
             </div>
-            <div className="col col-8">
-              <h3 className="text-white text-center mx-2">TRASANCCIONES</h3>
+            <div className="col col-8 d-flex align-items-center justify-content-center">
+              <h3 className="text-white">TRASANCCIONES</h3>
             </div>
-            <div className="col col-2">
-
+            <div className="col col-2 text-primary fs-2 text-center" style={{ cursor: "pointer" }}>
+              <i className="bi bi-arrow-up-right"></i>
+              <h5>Enviar pago</h5>
             </div>
           </div>
         </>

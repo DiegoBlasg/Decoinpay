@@ -9,6 +9,9 @@ services:
       - "3000:3000"
     logging:
       driver: none
+    environment:
+      - REACT_APP_PASSWORD = 4321
+      - REACT_APP_ADMIN_PASSWORD = 9876
   api-server:
     container_name: api-server
     build: ./backend

@@ -20,7 +20,11 @@ export default function PricesInGrid(props) {
                                         <Fav id={coin.id} tokens={props.favouriteTokens} /></div>
                                 </div>
                                 <div className="row">
-                                    <div className="text-center mt-2 fs-3"><Link to={"/coininfo/" + coin.id} className='text-white' style={{ textDecoration: "none" }}>{coin.symbol.toUpperCase()}</Link></div>
+                                    <div className="text-center mt-2 fs-3">
+                                        <Link to={"/coininfo/" + coin.id} className='text-white' style={{ textDecoration: "none" }}>
+                                            {coin.symbol.toUpperCase()}
+                                            {coin.price_change_percentage_24h > 0 ? <i className="bi bi-graph-up-arrow text-success mx-2 fs-5" /> : <i className="bi bi-graph-down-arrow text-danger mx-2 fs-5" />}
+                                        </Link></div>
                                 </div>
                                 <div className="row mt-2">
                                     <h3 className="card-title text-center fs-4">{formatDollar(coin.current_price, 16)}</h3>

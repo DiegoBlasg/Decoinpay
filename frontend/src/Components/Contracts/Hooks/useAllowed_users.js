@@ -9,7 +9,7 @@ const useAllowed_users = (url_id, url_idau) => {
     const [wallet_id, setWallet_id] = useState([]);
 
 
-    async function getOneAllowed_user() {
+    const getOneAllowed_user = async () => {
         if (selectedUser) {
             const axiosConfig = {
                 headers: {
@@ -36,15 +36,9 @@ const useAllowed_users = (url_id, url_idau) => {
                     wallet_id: walletInLowerCase
                 }
                 await axios.put('http://localhost:4000/contracts/alloweduser/' + url_id, newAllowed_user, axiosConfig)
-                window.location.href = '/ajustes/' + url_id
+                window.location.reload()
             } catch (error) {
                 alert(error.response.data.mensaje)
-                if (error.response.status == 403) {
-                    window.location.href = '/contracts'
-                }
-                if (error.response.status == 404) {
-                    window.location.href = '/contracts'
-                }
             }
         }
     }
@@ -61,15 +55,8 @@ const useAllowed_users = (url_id, url_idau) => {
                     alias: alias
                 }
                 await axios.post('http://localhost:4000/contracts/alloweduser/' + url_id + "/" + url_idau, newAllowed_user, axiosConfig)
-                window.location.href = '/ajustes/' + url_id
             } catch (error) {
                 alert(error.response.data.mensaje)
-                if (error.response.status == 403) {
-                    window.location.href = '/contracts'
-                }
-                if (error.response.status == 404) {
-                    window.location.href = '/contracts'
-                }
             }
         }
     }

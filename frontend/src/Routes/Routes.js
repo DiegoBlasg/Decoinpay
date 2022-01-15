@@ -13,14 +13,9 @@ import Contracts from '../Components/Contracts/Layout/Contracts';
 import ContractInfo from '../Components/Contracts/Layout/ContractInfo/ContractInfo';
 import ContractsSettings from '../Components/Contracts/Layout/ContractsSettings';
 
-import CreateContract from '../Components/Contracts/Forms/CreateContract';
-import ModifyContract from '../Components/Contracts/Forms/ModifyContract';
-import CreateAllowed_user from '../Components/Contracts/Forms/CreateAllowed_user';
-import ModifyAllowed_user from '../Components/Contracts/Forms/ModifyAllowed_user';
-
-import AddToken from '../Components/Prices/Forms/AddToken';
 import UserState from '../Context/User/UserState';
 import CoinInfo from '../Components/CoinInfo';
+
 
 function Routes() {
     const [phone, setPhone] = useState(true)
@@ -42,27 +37,6 @@ function Routes() {
             <BrowserRouter>
                 <Header isPhone={phone} />
                 <Switch>
-
-                    <Route path="/AddToken/:id">
-                        <AddToken />
-                    </Route>
-
-                    <Route path="/ModifyAllowedUser/:id/:idau">
-                        <ModifyAllowed_user />
-                    </Route>
-
-                    <Route path="/ModifyContract/:id">
-                        <ModifyContract />
-                    </Route>
-
-                    <Route path="/createAllowedUser/:id">
-                        <CreateAllowed_user />
-                    </Route>
-
-                    <Route path="/createContract">
-                        <CreateContract />
-                    </Route>
-
 
                     <Route path="/account">
                         <Account isPhone={phone} />

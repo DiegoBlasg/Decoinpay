@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom';
-import UserContext from '../../../../Context/User/UserContext';
 import useContract from "../../Hooks/useContracts";
 
 export default function ContractsWithAcces(props) {

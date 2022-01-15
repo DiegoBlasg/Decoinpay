@@ -15,11 +15,11 @@ const UserState = (props) => {
 
     const getProfile = async (wallet) => {
         const res = await axios.get("http://localhost:4000/users/", { headers: { "wallet": wallet } })
-        const yeyeye = {
+        const profileWithEncriptedWallet = {
             ...res.data,
             wallet_id: wallet
         }
-        dispatch({ type: GET_PROFILE, payload: yeyeye });
+        dispatch({ type: GET_PROFILE, payload: profileWithEncriptedWallet });
     }
 
     const SignOff = async () => {

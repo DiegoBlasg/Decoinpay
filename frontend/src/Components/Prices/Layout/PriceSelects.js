@@ -1,12 +1,18 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import ModalAddToken from "../Modals/ModalAddToken";
 
 export default function PriceSelects(props) {
+    const [modalAddTokenIsOpen, setModalAddTokenIsOpen] = useState(false)
+    const openmodalAddTokenIsOpen = () => {
+        setModalAddTokenIsOpen(true);
+    }
     return (
         props.isPhone ?
             <>
                 <div className="row py-3">
                     <div className="col col-2 text-primary fs-1 text-center">
-                        <Link to="/AddToken/1"><i className="bi bi-plus-square"></i></Link>
+                        <i className="bi bi-plus-square" onClick={() => openmodalAddTokenIsOpen()}></i>
                     </div>
                     <div className="col col-10 text-center">
                         <select className="btn btn-primary w-100" style={{ height: "40px" }} onChange={(e) => props.setSowTokens(e.target.value)}>
@@ -30,7 +36,7 @@ export default function PriceSelects(props) {
             :
             <div className="row pt-3">
                 <div className="col col-1 text-primary fs-1 text-center">
-                    <Link to="/AddToken/1"><i className="bi bi-plus-square"></i></Link>
+                    <i className="bi bi-plus-square" onClick={() => openmodalAddTokenIsOpen()}></i>
                 </div>
                 <div className="col col-5">
                     <div align="center">
@@ -51,6 +57,7 @@ export default function PriceSelects(props) {
                 <div className="col col-1 text-primary fs-1 text-center">
                     <i className="bi bi-arrow-clockwise" onClick={props.getCois()}></i>
                 </div>
+                <ModalAddToken modalIsOpen={modalAddTokenIsOpen} setIsOpen={setModalAddTokenIsOpen} />
             </div>
     )
 }

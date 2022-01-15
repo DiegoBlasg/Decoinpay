@@ -47,7 +47,7 @@ const useUsers = () => {
         }
     }
 
-    function getShortID(wallet) {
+    const getShortID = (wallet) => {
         return wallet.substring(0, 5) + "..." + wallet.substring(wallet.length - 4, wallet.length)
     }
     return {
