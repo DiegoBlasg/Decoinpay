@@ -1,20 +1,13 @@
 const { Router } = require('express');
-const { getUsersAdmin, getOnlyOneUserAdmin, createUser, getOnlyOneUser, deleteUser, newFavouriteToken, deleteFavouriteToken,
+const { createUser, getOnlyOneUser, newFavouriteToken, deleteFavouriteToken,
     newAdded_token, getAdded_tokens, deleteAdded_token, getFavouritesTokens, newContratWithAccess, getContratWithAccess,
-    deleteContratWithAccess, getTransactions } = require('../controllers/users.controllers')
+    deleteContratWithAccess, getTransactions, newTransactions } = require('../controllers/users.controllers')
 
 const router = Router();
-
-router.route('/admin')
-    .get(getUsersAdmin)
-
-router.route('/admin/:wallet')
-    .get(getOnlyOneUserAdmin)
 
 router.route('/')
     .get(getOnlyOneUser)
     .post(createUser)
-//.delete(deleteUser)
 
 router.route('/favouritetoken')
     .get(getFavouritesTokens)
@@ -39,5 +32,6 @@ router.route('/contratwithaccess/:contract')
 
 router.route('/transactions')
     .get(getTransactions)
+    .put(newTransactions)
 
 module.exports = router;

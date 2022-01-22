@@ -33,7 +33,7 @@ const useContract = (url_id) => {
                     }
                 };
                 const res = await axios.get('http://localhost:4000/contracts/contractinfo/' + url_id, axiosConfig)
-                if (res.data.wallet_id) {
+                if (res.data.allowed_users) {
                     setIsOwner(true)
                 }
                 setOneContractInArray([res.data])

@@ -25,7 +25,11 @@ const nodeSchema = new Schema({
             wallet_id: { type: String, require: true },
             alias: { type: String, require: true }
         }
-    ]
+    ],
+    api_key: {
+        type: String,
+        require: true
+    }
 });
 
 module.exports = model('Contract', nodeSchema)

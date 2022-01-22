@@ -10,29 +10,28 @@ const decryptText = (text) => {
     return textoDescifrado.toLowerCase()
 }
 
-usersCtrl.getUsersAdmin = async (req, res) => {
-    if ((process.env.ADMINPASSWORD || "9876") == decryptText(req.header('Wallet'))) {
-        const users = await User.find();
-        res.json(users);
-    }
-}
-usersCtrl.getOnlyOneUserAdmin = async (req, res) => {
-    if ((process.env.ADMINPASSWORD || "9876") == decryptText(req.header('Wallet'))) {
-        const user = await User.findOne({ wallet_id: req.params.wallet });
-        res.json(user);
-    }
-}
-
 usersCtrl.createUser = async (req, res) => {
-    if ((process.env.ADMINPASSWORD || "9876") == decryptText(req.header('Wallet'))) {
-        const { business_user, wallet_id } = req.body;
-        const newUser = new User({
-            wallet_id: decryptText(wallet_id),
-            business_user
-        });
-        await newUser.save();
-        res.json({ message: 'User created' });
+    try {
+        const users = await User.find();
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].wallet_id == decryptText(req.header('wallet'))) {
+                res.json(users[i]);
+                return
+            }
+        }
+        if ((process.env.ADMINPASSWORD || "9876") == decryptText(req.header('admin'))) {
+            const { business_user } = req.body;
+            const newUser = new User({
+                wallet_id: decryptText(req.header('wallet')),
+                business_user
+            });
+            await newUser.save();
+            res.json(newUser);
+        }
+    } catch (error) {
+        console.log(error);
     }
+
 }
 
 usersCtrl.getOnlyOneUser = async (req, res) => {
@@ -144,6 +143,23 @@ usersCtrl.deleteContratWithAccess = async (req, res) => {
 usersCtrl.getTransactions = async (req, res) => {
     const user = await User.findOne({ wallet_id: decryptText(req.header('Wallet')) });
     res.json(user.transactions);
+}
+usersCtrl.newTransactions = async (req, res) => {
+    const { txnHash, block, dateTime, from, to, value, txnFee } = req.body;
+    await User.findOneAndUpdate({ wallet_id: decryptText(req.header('Wallet')) }, {
+        $push: {
+            transactions: {
+                hash: txnHash,
+                block: block,
+                age: dateTime,
+                from: from,
+                to: to,
+                value: value,
+                txn_fee: txnFee
+            }
+        }
+    });
+    res.json({ message: 'transaction added' });
 }
 
 

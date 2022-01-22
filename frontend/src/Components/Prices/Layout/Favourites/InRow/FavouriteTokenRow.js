@@ -25,7 +25,7 @@ export default function FavouriteTokenRow(props) {
                 <th><Link to={"/coininfo/" + coin.id} className='text-white' style={{ textDecoration: "none" }}> <img alt="CoinLogo" src={coin.image} style={{ width: "27px" }} className="mx-2" />{`${coin.name} (${coin.symbol.toUpperCase()})`}</Link></th>
                 <td style={{ whiteSpace: "nowrap" }}>{formatDollar(coin.current_price, 16)}</td>
                 <td className="text-muted">{formatDollar(coin.ath, 16)}</td>
-                <td className={coin.price_change_percentage_24h > 0 ? "text-success" : "text-danger"}>{(coin.price_change_percentage_24h > 0 ? "+" : "-") + formatDollar(coin.price_change_percentage_24h, 2).substring(1) + "%"}</td>
+                <td className={coin.price_change_percentage_24h > 0 ? "text-success" : "text-danger"}>{(coin.price_change_percentage_24h > 0 ? "+" + formatDollar(coin.price_change_percentage_24h, 2).substring(1) + "%" : "-" + formatDollar(coin.price_change_percentage_24h, 3).substring(2) + "%")}</td>
                 <td style={{ whiteSpace: "nowrap" }}>{formatDollar(coin.market_cap, 16)}</td>
                 <td style={{ whiteSpace: "nowrap" }}>{formatDollar(coin.market_cap, 16)}</td>
                 <td style={{ whiteSpace: "nowrap" }}>{formatDollar(coin.circulating_supply, 16)}</td>

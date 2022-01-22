@@ -62,6 +62,9 @@ export default function Header(props) {
                         <li className="nav-item">
                             <Link className="nav-link text-light" to="/account">Cuenta</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link text-light" to="/api">API</Link>
+                        </li>
                     </ul>
                 </div>
             </header >
@@ -80,6 +83,9 @@ export default function Header(props) {
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link text-light" to="/account">Cuenta</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link text-light" to="/api">API</Link>
                         </li>
                     </ul>
                     <button type="button" className="btn btn-primary text-white fs-5" onClick={() => ConnectWallet()}>{loginState}</button>

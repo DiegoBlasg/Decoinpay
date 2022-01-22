@@ -37,15 +37,15 @@ export default function ContractInfo(props) {
                     </thead>
                     <tbody>
                         {
-                            transactions.map(transaction => (
-                                <tr>
-                                    <th style={{ whitespace: "nowrap" }} scope="row"><a href="/" style={{ textDecoration: "none" }} className="link-info">0x2d1f8c4bbd0bb68916e22...</a></th>
-                                    <td style={{ whiteSpace: "nowrap" }}><a href="/" style={{ textDecoration: "none" }} className="link-info">13250498</a></td>
-                                    <td style={{ whiteSpace: "nowrap" }}>34 secs ago</td>
-                                    <td style={{ whiteSpace: "nowrap" }}>0xbf3fc05517c6e649ae2d1...</td>
-                                    <td style={{ whiteSpace: "nowrap" }}><a href="/" style={{ textDecoration: "none" }} className="link-info"><i className="bi bi-file-earmark-text text-info"></i> PancakeSwap: Router v2</a></td>
-                                    <td style={{ whiteSpace: "nowrap" }}>0 BNB</td>
-                                    <td style={{ whiteSpace: "nowrap" }}>0.000590815</td>
+                            transactions.slice(0).reverse().map(transaction => (
+                                <tr key={transaction.hash}>
+                                    <th scope="row"><a href="/cuenta" style={{ textDecoration: "none" }} className="link-info">{(transaction.hash).substring(0, 20) + "..."}</a></th>
+                                    <td style={{ whiteSpace: "nowrap" }}><a href="/cuenta" style={{ textDecoration: "none" }} className="link-info">{transaction.block}</a></td>
+                                    <td style={{ whiteSpace: "nowrap" }}>{transaction.age}</td>
+                                    <td style={{ whiteSpace: "nowrap" }}>{(transaction.from).substring(0, 20) + "..."}</td>
+                                    <td style={{ whiteSpace: "nowrap" }}><a href="/cuenta" style={{ textDecoration: "none" }} className="link-info">{(transaction.to).substring(0, 20) + "..."}</a></td>
+                                    <td style={{ whiteSpace: "nowrap" }}>{transaction.value}</td>
+                                    <td style={{ whiteSpace: "nowrap", fontSize: "12px" }} className='text-muted'>{transaction.txn_fee}</td>
                                 </tr>
                             ))
                         }

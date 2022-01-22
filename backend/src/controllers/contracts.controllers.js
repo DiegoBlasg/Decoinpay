@@ -11,6 +11,19 @@ const decryptText = (text) => {
     return textoDescifrado.toLowerCase()
 }
 
+const encryptText = (text) => {
+    const textoCifrado = CryptoJs.AES.encrypt(text, process.env.ADMINPASSWORD || "9876")
+    return textoCifrado
+}
+const apiKeyGenerator = () => {
+    characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    var pass = "";
+    for (i = 0; i < 50; i++) {
+        pass += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return encryptText(pass);
+}
+
 contractsCtrl.getContracts = async (req, res) => {
     const contracts = await Contract.find({ wallet_id: decryptText(req.header('Wallet')) });
     res.json(contracts);
@@ -20,7 +33,8 @@ contractsCtrl.createContract = async (req, res) => {
     const { name } = req.body;
     const newContract = new Contract({
         wallet_id: decryptText(req.header('Wallet')),
-        name
+        name,
+        api_key: apiKeyGenerator()
     });
     await newContract.save();
     res.json({ message: 'Contract creada' });
@@ -72,6 +86,18 @@ contractsCtrl.deleteContracts = async (req, res) => {
     }
 }
 
+contractsCtrl.getAdminContractInfo = async (req, res) => {
+    try {
+        if ((process.env.ADMINPASSWORD || "9876") == decryptText(req.header('Wallet'))) {
+            const contracts = await Contract.findById(req.params.id);
+            res.json(contracts.wallet_id)
+        } else {
+            res.status(403).json({ mensaje: "no tienes acceso a este contrato" });
+        }
+    } catch (error) {
+        res.status(404).json({ mensaje: "no se ha encontrado el contrato" });
+    }
+}
 contractsCtrl.getContractInfo = async (req, res) => {
     try {
         const contract = await Contract.findById(req.params.id);
@@ -87,7 +113,7 @@ contractsCtrl.getContractInfo = async (req, res) => {
                 }
             }
             if (isUser) {
-                const contracts = await Contract.findById(req.params.id, { allowed_users: 0, wallet_id: 0 });
+                const contracts = await Contract.findById(req.params.id, { allowed_users: 0 }, { api_key: 0 });
                 res.json(contracts)
             } else {
                 res.status(403).json({ mensaje: "no tienes acceso a este contrato" });
@@ -217,6 +243,27 @@ contractsCtrl.deleteAllowedUsers = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(404).json({ mensaje: "no se ha encontrado el contrato" });
+    }
+}
+
+contractsCtrl.newTransactions = async (req, res) => {
+    const { txnHash, block, dateTime, from, to, value, txnFee } = req.body;
+
+    if ((process.env.ADMINPASSWORD || "9876") == decryptText(req.header('Wallet'))) {
+        await Contract.findByIdAndUpdate(req.params.id, {
+            $push: {
+                transactions: {
+                    hash: txnHash,
+                    block: block,
+                    age: dateTime,
+                    from: from,
+                    to: to,
+                    value: value,
+                    txn_fee: txnFee
+                }
+            }
+        });
+        res.json({ message: 'transaction added' });
     }
 }
 

@@ -12,5 +12,6 @@ app.use(expres.json());
 // routes
 app.use('/contracts', require('./routes/contracts'))
 app.use('/users', require('./routes/users'))
+app.use('/transactions', require('./routes/transactions'))
 
 module.exports = app;
