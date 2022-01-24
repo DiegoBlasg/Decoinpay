@@ -35,8 +35,8 @@ services:
     ports:
       - 80:80
     links:
-      - expressapp
-      - reactapp
+      - api-server
+      - react-app
       - nginx-proxy
       - letsencrypt
     environment: 
