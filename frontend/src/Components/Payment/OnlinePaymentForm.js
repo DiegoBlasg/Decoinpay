@@ -91,7 +91,7 @@ export default function OnlinePaymentForm() {
             <div className="row shadow mb-4 bg-dark rounded p-3 mx-2">
                 <div className="d-flex justify-content-center">
                     <span className="bg-dark border border-3 border-white text-white">
-                        <QRCode value={`http://localhost:3000/dopayment/${hash}`} />
+                        <QRCode value={`https://decoinpay.com/dopayment/${hash}`} />
                     </span>
                 </div>
             </div>

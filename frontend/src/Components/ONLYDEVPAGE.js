@@ -6,8 +6,8 @@ export default function OnlyDevPage() {
     const onSubmit = async () => {
         const newTransaction = {
             valueInBNB: "0.02",
-            return_url: "http://localhost:3000/account",
-            cancel_url: "http://localhost:3000/onlydevpage"
+            return_url: "https://decoinpay.com/account",
+            cancel_url: "https://decoinpay.com/onlydevpage"
         };
         const authorization = {
             headers: {
@@ -17,7 +17,7 @@ export default function OnlyDevPage() {
         }
         const res = await axios.post("/api/transactions", newTransaction, authorization)
 
-        //aqui dirige a www.localhost:3000/pay/has-de-la-transaccion
+        //aqui dirige a https://decoinpay.com/pay/has-de-la-transaccion
         window.location.href = "/pay/" + res.data.hash
     }
 

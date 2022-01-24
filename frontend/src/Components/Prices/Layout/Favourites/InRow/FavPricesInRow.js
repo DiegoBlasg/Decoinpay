@@ -17,7 +17,6 @@ export default function FavPricesInRow(props) {
                         <th scope="col">ath</th>
                         <th scope="col">24h%</th>
                         <th scope="col">Market Cap</th>
-                        <th scope="col">Volume(24h)</th>
                         <th scope="col">Circulating Supply</th>
                     </tr>
                 </thead>

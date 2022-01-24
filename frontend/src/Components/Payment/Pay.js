@@ -39,14 +39,14 @@ export default function Pay() {
                         {
                             selectedUser ?
 
-                                <QRCode value={`http://localhost:3000/dopayment/${txnhash}`} />
+                                <QRCode value={`https://decoinpay.com/dopayment/${txnhash}`} />
                                 :
                                 <></>
                         }
                     </span>
                 </div>
 
-                <h5 className="text-center my-3">{`http://localhost:3000/dopayment/${txnhash}`}</h5>
+                <h5 className="text-center my-3">{`https://decoinpay.com/dopayment/${txnhash}`}</h5>
             </div>
 
             <div className="row shadow mb-4 bg-dark rounded p-3 mx-2 text-center">

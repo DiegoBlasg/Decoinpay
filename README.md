@@ -24,7 +24,7 @@ docker-compose build
 ```bash
 docker-compose up
 ```
-6. si todo ha salido bien la página web tiene que estar el http://localhost:3000/
+6. si todo ha salido bien la página web tiene que estar el https://decoinpay.com/
 7. Tener instalado la extension de Metamask
 8. No es obligatorio pero se recomienda tener instalado Ganache (blockchain local) para no gastar dinero real
 
