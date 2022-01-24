@@ -15,7 +15,7 @@ export default function OnlyDevPage() {
                 api_key: 'fbqiiffj42ezqwq0nz6g1r0wyjzcczjjkkzoqzgflhfphe8ohu'
             }
         }
-        const res = await axios.post("http://localhost:4000/transactions", newTransaction, authorization)
+        const res = await axios.post("/api/transactions", newTransaction, authorization)
 
         //aqui dirige a www.localhost:3000/pay/has-de-la-transaccion
         window.location.href = "/pay/" + res.data.hash

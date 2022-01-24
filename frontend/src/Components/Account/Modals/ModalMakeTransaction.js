@@ -68,8 +68,8 @@ export default function ModalMakeTransaction({ modalIsOpen, setIsOpen, getUserTr
                         "wallet": selectedUser.wallet_id
                     }
                 };
-                await axios.put('http://localhost:4000/users/transactions', transaction, axiosConfig)
-                const res = await axios.get('http://localhost:4000/users/transactions', axiosConfig)
+                await axios.put('/api/users/transactions', transaction, axiosConfig)
+                const res = await axios.get('/api/users/transactions', axiosConfig)
                 getUserTransactions()
                 getBalance()
             } catch (error) {

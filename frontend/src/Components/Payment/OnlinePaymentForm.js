@@ -57,20 +57,20 @@ export default function OnlinePaymentForm() {
                 "wallet": encryptText(walletAdress.toLowerCase())
             }
         };
-        await axios.put('http://localhost:4000/users/transactions', newtransaction, axiosConfig)
+        await axios.put('/api/users/transactions', newtransaction, axiosConfig)
 
-        await axios.put('http://localhost:4000/contracts/transactions/' + transaction.contract_id, newtransaction, { headers: { "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876") } })
+        await axios.put('/api/contracts/transactions/' + transaction.contract_id, newtransaction, { headers: { "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876") } })
 
         const updateOTransaction = {
             transactionHash: tx.hash
         }
-        await axios.put("http://localhost:4000/transactions/" + hash, updateOTransaction, axiosConfig)
+        await axios.put("/api/transactions/" + hash, updateOTransaction, axiosConfig)
 
         window.location.href = transaction.return_url
     }
 
     const getTransaction = async () => {
-        const res = await axios.get("http://localhost:4000/transactions/" + hash)
+        const res = await axios.get("/api/transactions/" + hash)
         setTransaction(res.data)
         getPriceOfValue(res.data.valueInBNB)
     }

@@ -23,7 +23,7 @@ export default function DoPayment() {
                     "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876")
                 }
             };
-            const res = await axios.get('http://localhost:4000/contracts/admin/contractinfo/' + contract_id, axiosConfig)
+            const res = await axios.get('/api/contracts/admin/contractinfo/' + contract_id, axiosConfig)
             setWallet(res.data)
         }
     }
@@ -68,13 +68,13 @@ export default function DoPayment() {
                         "wallet": selectedUser.wallet_id
                     }
                 };
-                await axios.put('http://localhost:4000/users/transactions', transaction, axiosConfig)
+                await axios.put('/api/users/transactions', transaction, axiosConfig)
 
-                await axios.put('http://localhost:4000/contracts/transactions/' + contract_id, transaction, { headers: { "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876") } })
+                await axios.put('/api/contracts/transactions/' + contract_id, transaction, { headers: { "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876") } })
                 const updateOTransaction = {
                     transactionHash: tx.hash
                 }
-                await axios.put("http://localhost:4000/transactions/" + txnhash, updateOTransaction, axiosConfig)
+                await axios.put("/api/transactions/" + txnhash, updateOTransaction, axiosConfig)
 
             } catch (error) {
                 console.log(error);
@@ -88,7 +88,7 @@ export default function DoPayment() {
 
     }
     const getTransaction = async () => {
-        const res = await axios.get("http://localhost:4000/transactions/admin/" + txnhash)
+        const res = await axios.get("/api/transactions/admin/" + txnhash)
         setAmount(res.data.valueInBNB)
         setContract_id(res.data.contract_id)
         if (contract_id) {

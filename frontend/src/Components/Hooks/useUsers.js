@@ -25,7 +25,7 @@ const useUsers = () => {
                     "wallet": selectedUser.wallet_id
                 }
             };
-            const res = await axios.get('http://localhost:4000/users/transactions', axiosConfig)
+            const res = await axios.get('/api/users/transactions', axiosConfig)
             setTransactions(res.data)
         }
     }
@@ -41,7 +41,7 @@ const useUsers = () => {
             wallet_id: walletAdress,
             business_user: false
         }
-        await axios.post('http://localhost:4000/users', newUser, axiosConfig)
+        await axios.post('/api/users', newUser, axiosConfig)
         getProfile(walletAdress);
         setLoginState(getShortID(decryptText(walletAdress).toLowerCase()))
 

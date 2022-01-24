@@ -17,7 +17,7 @@ export default function Pay() {
 
     getPriceOfValue()
     const getTransaction = async () => {
-        const res = await axios.get("http://localhost:4000/transactions/admin/" + txnhash)
+        const res = await axios.get("/api/transactions/admin/" + txnhash)
         setValue(res.data.valueInBNB)
     }
 

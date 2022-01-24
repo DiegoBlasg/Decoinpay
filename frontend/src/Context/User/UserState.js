@@ -14,7 +14,7 @@ const UserState = (props) => {
     const [state, dispatch] = useReducer(UserReducer, initialState)
 
     const getProfile = async (wallet) => {
-        const res = await axios.get("http://localhost:4000/users/", { headers: { "wallet": wallet } })
+        const res = await axios.get("/api/users/", { headers: { "wallet": wallet } })
         const profileWithEncriptedWallet = {
             ...res.data,
             wallet_id: wallet
