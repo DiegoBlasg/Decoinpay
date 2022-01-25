@@ -10,6 +10,27 @@ const useUsers = () => {
     const [balance, setBalance] = useState()
 
     const getBalance = async () => {
+        if (window.ethereum) {
+            getBalancehandleEthereum();
+        } else {
+            window.addEventListener('ethereum#initialized', getBalancehandleEthereum, {
+                once: true,
+            });
+            setTimeout(getBalancehandleEthereum, 3000);
+        }
+    }
+
+    function getBalancehandleEthereum() {
+        const { ethereum } = window;
+        if (ethereum && ethereum.isMetaMask) {
+
+            getBalanceWithEthereum()
+        } else {
+            console.log('Please install MetaMask!');
+        }
+    }
+
+    const getBalanceWithEthereum = async () => {
         if (selectedUser) {
             const provider = new ethers.providers.Web3Provider(window.ethereum)
             const balance = await provider.getBalance(decryptText(selectedUser.wallet_id))

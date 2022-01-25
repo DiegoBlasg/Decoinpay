@@ -30,8 +30,28 @@ export default function ModalMakeTransaction({ modalIsOpen, setIsOpen, getUserTr
     const closeModal = () => {
         setIsOpen(false);
     }
+    const onSubmit = async () => {
+        if (window.ethereum) {
+            onSubmithandleEthereum();
+        } else {
+            window.addEventListener('ethereum#initialized', onSubmithandleEthereum, {
+                once: true,
+            });
+            setTimeout(onSubmithandleEthereum, 3000);
+        }
+    }
 
-    const onSubmit = async (event) => {
+    function onSubmithandleEthereum() {
+        const { ethereum } = window;
+        if (ethereum && ethereum.isMetaMask) {
+
+            makeTransaction()
+        } else {
+            console.log('Please install MetaMask!');
+        }
+    }
+
+    const makeTransaction = async (event) => {
         event.preventDefault();
         if (selectedUser) {
             try {

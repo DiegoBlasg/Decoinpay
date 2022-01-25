@@ -21,7 +21,6 @@ export default function Header(props) {
     }
 
     const ConnectWallethandleEthereum = async () => {
-        console.log("se ejecuta handle event");
         const { ethereum } = window;
         if (ethereum && ethereum.isMetaMask) {
             const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -36,7 +35,6 @@ export default function Header(props) {
     }
 
     const getMetamask = async () => {
-        setLoginState("londing...")
         if (window.ethereum) {
             getMetamaskhandleEthereum();
         } else {
@@ -48,20 +46,13 @@ export default function Header(props) {
     }
 
     const getMetamaskhandleEthereum = async () => {
-        console.log("se ejecuta handle event");
-        const { ethereum } = window;
-        if (ethereum && ethereum.isMetaMask) {
-            try {
-                const provider = new ethers.providers.Web3Provider(window.ethereum)
-                const signer = provider.getSigner();
-                const walletAdress = encryptText(await signer.getAddress());
-                CreateOrGetUserByWallet(walletAdress);
-            } catch (error) {
-                console.log("no se puede conectar con metamask");
-            }
-        } else {
-            alert("Instale metamask")
-            setLoginState("Connect")
+        try {
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const signer = provider.getSigner();
+            const walletAdress = encryptText(await signer.getAddress());
+            CreateOrGetUserByWallet(walletAdress);
+        } catch (error) {
+            console.log("no se puede conectar con metamask");
         }
     }
 

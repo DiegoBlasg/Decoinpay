@@ -56,12 +56,12 @@ export default function ModalAddToken({ modalIsOpen, setIsOpen }) {
                 <hr className='text-white' />
                 <h2 className='text-white text-center'>Añadir token</h2>
                 <hr className='text-white' />
-                <div className="text-center w-50  mx-auto mt-2 mb-4">
+                <div className="text-center mx-auto mt-2 mb-4">
                     <h3 className="text-white my-2">Contrato</h3>
-                    <input type="text" className="w-50 border-primary bg-dark text-white my-2" placeholder="Nombre del contrato" onChange={onImputChange} required />
+                    <input type="text" className="w-75 border-primary bg-dark text-white my-2" placeholder="Nombre del contrato" onChange={onImputChange} required />
                 </div>
                 <div className="text-center mt-4">
-                    <button className="btn btn-primary w-25">Crear</button>
+                    <button className="btn btn-primary">Crear</button>
                 </div>
             </form>
         </Modal>

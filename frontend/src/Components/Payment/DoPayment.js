@@ -32,7 +32,29 @@ export default function DoPayment() {
         const res = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd')
         setValuePrice(res.data.binancecoin.usd * amount);
     }
+
     const onSubmit = async () => {
+        if (window.ethereum) {
+            onSubmithandleEthereum();
+        } else {
+            window.addEventListener('ethereum#initialized', onSubmithandleEthereum, {
+                once: true,
+            });
+            setTimeout(onSubmithandleEthereum, 3000);
+        }
+    }
+
+    function onSubmithandleEthereum() {
+        const { ethereum } = window;
+        if (ethereum && ethereum.isMetaMask) {
+
+            makeTransaction()
+        } else {
+            console.log('Please install MetaMask!');
+        }
+    }
+
+    const makeTransaction = async (event) => {
         if (selectedUser) {
             try {
                 const provider = new ethers.providers.Web3Provider(window.ethereum)
