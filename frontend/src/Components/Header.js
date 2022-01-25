@@ -3,31 +3,50 @@ import React, { useContext } from "react";
 import { ethers } from 'ethers';
 import useUsers from './Hooks/useUsers'
 import UserContext from '../Context/User/UserContext';
+import detectEthereumProvider from '@metamask/detect-provider';
 
 export default function Header(props) {
     const { CreateOrGetUserByWallet, loginState, setLoginState } = useUsers();
     const { encryptText } = useContext(UserContext);
 
     const ConnectWallet = async () => {
+        const web3provider = await detectEthereumProvider();
         setLoginState("londing...")
-        if (!window.ethereum) {
-            alert("Instale metamask")
-            setLoginState("Conect")
-            return;
+        if (web3provider) {
+            if (web3provider !== window.ethereum) {
+                alert('Do you have multiple wallets installed?');
+                setLoginState("Connect")
+            } else {
+                const provider = new ethers.providers.Web3Provider(web3provider)
+                await provider.send("eth_requestAccounts", [])
+                const signer = provider.getSigner();
+                const walletAdress = encryptText(await signer.getAddress());
+                CreateOrGetUserByWallet(walletAdress)
+            }
+        } else {
+            alert('Please install MetaMask!');
+            setLoginState("Connect")
         }
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
-        await provider.send("eth_requestAccounts", [])
-        const signer = provider.getSigner();
-        const walletAdress = encryptText(await signer.getAddress())
-        CreateOrGetUserByWallet(walletAdress)
     }
 
     const getMetamask = async () => {
         try {
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
-            const signer = provider.getSigner();
-            const walletAdress = encryptText(await signer.getAddress());
-            CreateOrGetUserByWallet(walletAdress);
+            const web3provider = await detectEthereumProvider();
+            if (web3provider) {
+                if (web3provider !== window.ethereum) {
+                    alert('Do you have multiple wallets installed?');
+                    setLoginState("Connect")
+                } else {
+                    const provider = new ethers.providers.Web3Provider(web3provider)
+                    await provider.send("eth_requestAccounts", [])
+                    const signer = provider.getSigner();
+                    const walletAdress = encryptText(await signer.getAddress());
+                    CreateOrGetUserByWallet(walletAdress)
+                }
+            } else {
+                alert('Please install MetaMask!');
+                setLoginState("Connect")
+            }
         } catch (error) {
             console.log("no se puede conectar con metamask");
         }

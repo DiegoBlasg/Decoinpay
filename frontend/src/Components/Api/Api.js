@@ -30,7 +30,7 @@ export default function Api() {
             {
                 direccionpago ?
                     <div className="shadow mb-4 bg-dark rounded p-3 text-center text-white py-4">
-                        <h4>www.decoinpay.com//pay/<font className="text-success ">has-de-la-transaccion</font></h4>
+                        <h4>www.decoinpay.com/pay/<font className="text-success ">has-de-la-transaccion</font></h4>
                     </div>
                     :
                     <></>
@@ -82,8 +82,8 @@ export default function Api() {
                         <div className="d-flex justify-content-around align-items-center shadow mb-4 bg-dark rounded p-3 mx-5 text-white" style={{ cursor: "pointer" }} onClick={() => setGet1(!get1)}>
                             <span className="btn btn-primary mx-2">GET</span>
                             <div className="d-flex justify-content-center">
-                                <h4 className="font-weight-bold">/transactions/:conractid</h4>
-                                <p className="my-auto mx-3" style={{ fontSize: "14px" }}>Muestra todas las transaciones del contrato aunque no se hayan hecho</p>
+                                <h4 className="font-weight-bold">/api/transactions</h4>
+                                <p className="my-auto mx-3" style={{ fontSize: "14px" }}>Muestra todas las transaciones del contrato aunque la propiedad isPaid sea false</p>
                             </div>
                             <i className={`bi bi-caret-${get1 ? "up" : "down"}-fill mx-3 fs-3`}></i>
                         </div>
@@ -105,7 +105,7 @@ export default function Api() {
                         <div className="d-flex justify-content-around align-items-center shadow mb-4 bg-dark rounded p-3 mx-5 text-white" style={{ cursor: "pointer" }} onClick={() => setGet2(!get2)}>
                             <span className="btn btn-primary mx-2">GET</span>
                             <div className="d-flex justify-content-center">
-                                <h4 className="font-weight-bold">/transactions/:conractid/:idtransaction</h4>
+                                <h4 className="font-weight-bold">/api/transaction/:idtransaction</h4>
                                 <p className="my-auto mx-3" style={{ fontSize: "14px" }}>Muestra la informacion de una transaccion</p>
                             </div>
                             <i className={`bi bi-caret-${get2 ? "up" : "down"}-fill mx-3 fs-3`}></i>
@@ -128,8 +128,8 @@ export default function Api() {
                         <div className="d-flex justify-content-around align-items-center shadow mb-4 bg-dark rounded p-3 mx-5 text-white" style={{ cursor: "pointer" }} onClick={() => setPost1(!post1)}>
                             <span className="btn btn-success mx-2">POST</span>
                             <div className="d-flex justify-content-center">
-                                <h4 className="font-weight-bold">/transactions/:conractid</h4>
-                                <p className="my-auto mx-3" style={{ fontSize: "14px" }}>Agraga una transaccion inicialmente con el ispaid en false</p>
+                                <h4 className="font-weight-bold">/api/transactions</h4>
+                                <p className="my-auto mx-3" style={{ fontSize: "14px" }}>Agraga una transaccion inicialmente con el ispaid en false y te devuelve el hash</p>
                             </div>
                             <i className={`bi bi-caret-${post1 ? "up" : "down"}-fill mx-3 fs-3`}></i>
                         </div>
