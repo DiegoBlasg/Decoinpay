@@ -43,7 +43,6 @@ export default function Header(props) {
         })
     }
 
-
     return (
         props.isPhone ?
             <header className="navbar navbar-light bg-dark">
