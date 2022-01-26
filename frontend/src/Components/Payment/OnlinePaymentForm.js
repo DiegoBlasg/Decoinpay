@@ -4,7 +4,6 @@ import React, { useContext, useState } from "react"
 import QRCode from 'react-qr-code';
 import { useParams } from "react-router-dom";
 import UserContext from "../../Context/User/UserContext";
-import detectEthereumProvider from '@metamask/detect-provider';
 
 export default function OnlinePaymentForm() {
 
@@ -19,32 +18,9 @@ export default function OnlinePaymentForm() {
         setValuePrice(res.data.binancecoin.usd * value);
     }
 
-    const onSubmit = async () => {
-        const detectProvider = await detectEthereumProvider();
-        if (detectProvider) {
-            onSubmithandleEthereum();
-        } else {
-            window.addEventListener('ethereum#initialized', onSubmithandleEthereum, {
-                once: true,
-            });
-            setTimeout(onSubmithandleEthereum, 3000);
-        }
-    }
-
-    function onSubmithandleEthereum() {
-        const { ethereum } = window;
-        if (ethereum && ethereum.isMetaMask) {
-
-            makeTransaction()
-        } else {
-            console.log('Please install MetaMask!');
-        }
-    }
-
-    const makeTransaction = async (event) => {
+    const onSubmit = async (event) => {
         event.preventDefault()
-        const detectProvider = await detectEthereumProvider();
-        const provider = new ethers.providers.Web3Provider(detectProvider)
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
         await provider.send("eth_requestAccounts", [])
         const signer = provider.getSigner();
         const walletAdress = await signer.getAddress()
@@ -81,20 +57,20 @@ export default function OnlinePaymentForm() {
                 "wallet": encryptText(walletAdress.toLowerCase())
             }
         };
-        await axios.put('/api/users/transactions', newtransaction, axiosConfig)
+        await axios.put('http://localhost:4000/users/transactions', newtransaction, axiosConfig)
 
-        await axios.put('/api/contracts/transactions/' + transaction.contract_id, newtransaction, { headers: { "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876") } })
+        await axios.put('http://localhost:4000/contracts/transactions/' + transaction.contract_id, newtransaction, { headers: { "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876") } })
 
         const updateOTransaction = {
             transactionHash: tx.hash
         }
-        await axios.put("/api/transactions/" + hash, updateOTransaction, axiosConfig)
+        await axios.put("http://localhost:4000/transactions/" + hash, updateOTransaction, axiosConfig)
 
         window.location.href = transaction.return_url
     }
 
     const getTransaction = async () => {
-        const res = await axios.get("/api/transactions/" + hash)
+        const res = await axios.get("http://localhost:4000/transactions/" + hash)
         setTransaction(res.data)
         getPriceOfValue(res.data.valueInBNB)
     }

@@ -3,7 +3,6 @@ import React, { useContext, useState } from 'react';
 import UserContext from '../../../Context/User/UserContext'
 import Modal from 'react-modal';
 import axios from 'axios';
-import detectEthereumProvider from '@metamask/detect-provider';
 
 const customStyles = {
     content: {
@@ -31,33 +30,12 @@ export default function ModalMakeTransaction({ modalIsOpen, setIsOpen, getUserTr
     const closeModal = () => {
         setIsOpen(false);
     }
-    const onSubmit = async () => {
-        const detectProvider = await detectEthereumProvider();
-        if (detectProvider) {
-            onSubmithandleEthereum();
-        } else {
-            window.addEventListener('ethereum#initialized', onSubmithandleEthereum, {
-                once: true,
-            });
-            setTimeout(onSubmithandleEthereum, 3000);
-        }
-    }
 
-    function onSubmithandleEthereum() {
-        const { ethereum } = window;
-        if (ethereum && ethereum.isMetaMask) {
-            makeTransaction()
-        } else {
-            console.log('Please install MetaMask!');
-        }
-    }
-
-    const makeTransaction = async (event) => {
+    const onSubmit = async (event) => {
         event.preventDefault();
         if (selectedUser) {
             try {
-                const detectProvider = await detectEthereumProvider();
-                const provider = new ethers.providers.Web3Provider(detectProvider)
+                const provider = new ethers.providers.Web3Provider(window.ethereum)
                 await provider.send("eth_requestAccounts", [])
                 const signer = provider.getSigner();
                 const tx = await signer.sendTransaction({
@@ -90,8 +68,8 @@ export default function ModalMakeTransaction({ modalIsOpen, setIsOpen, getUserTr
                         "wallet": selectedUser.wallet_id
                     }
                 };
-                await axios.put('/api/users/transactions', transaction, axiosConfig)
-                const res = await axios.get('/api/users/transactions', axiosConfig)
+                await axios.put('http://localhost:4000/users/transactions', transaction, axiosConfig)
+                const res = await axios.get('http://localhost:4000/users/transactions', axiosConfig)
                 getUserTransactions()
                 getBalance()
             } catch (error) {

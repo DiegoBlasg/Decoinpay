@@ -3,56 +3,28 @@ import React, { useContext } from "react";
 import { ethers } from 'ethers';
 import useUsers from './Hooks/useUsers'
 import UserContext from '../Context/User/UserContext';
-import detectEthereumProvider from '@metamask/detect-provider';
 
 export default function Header(props) {
     const { CreateOrGetUserByWallet, loginState, setLoginState } = useUsers();
     const { encryptText } = useContext(UserContext);
 
     const ConnectWallet = async () => {
-        const detectProvider = await detectEthereumProvider();
         setLoginState("londing...")
-        if (detectProvider) {
-            ConnectWallethandleEthereum();
-        } else {
-            window.addEventListener('ethereum#initialized', ConnectWallethandleEthereum, {
-                once: true,
-            });
-            setTimeout(ConnectWallethandleEthereum, 3000);
-        }
-    }
-
-    const ConnectWallethandleEthereum = async () => {
-        const { ethereum } = window;
-        const detectProvider = await detectEthereumProvider();
-        if (ethereum && ethereum.isMetaMask) {
-            const provider = new ethers.providers.Web3Provider(detectProvider)
-            await provider.send("eth_requestAccounts", [])
-            const signer = provider.getSigner();
-            const walletAdress = encryptText(await signer.getAddress())
-            CreateOrGetUserByWallet(walletAdress)
-        } else {
+        if (!window.ethereum) {
             alert("Instale metamask")
-            setLoginState("Connect")
+            setLoginState("Conect")
+            return;
         }
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        await provider.send("eth_requestAccounts", [])
+        const signer = provider.getSigner();
+        const walletAdress = encryptText(await signer.getAddress())
+        CreateOrGetUserByWallet(walletAdress)
     }
 
     const getMetamask = async () => {
-        const detectProvider = await detectEthereumProvider();
-        if (detectProvider) {
-            getMetamaskhandleEthereum();
-        } else {
-            window.addEventListener('ethereum#initialized', getMetamaskhandleEthereum, {
-                once: true,
-            });
-            setTimeout(getMetamaskhandleEthereum, 3000);
-        }
-    }
-
-    const getMetamaskhandleEthereum = async () => {
         try {
-            const detectProvider = await detectEthereumProvider();
-            const provider = new ethers.providers.Web3Provider(detectProvider)
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
             const signer = provider.getSigner();
             const walletAdress = encryptText(await signer.getAddress());
             CreateOrGetUserByWallet(walletAdress);
@@ -62,7 +34,7 @@ export default function Header(props) {
     }
 
     React.useEffect(() => {
-        getMetamask();
+        getMetamask()
     }, [])
 
     if (window.ethereum) {
