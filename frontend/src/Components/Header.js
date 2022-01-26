@@ -3,14 +3,16 @@ import React, { useContext } from "react";
 import { ethers } from 'ethers';
 import useUsers from './Hooks/useUsers'
 import UserContext from '../Context/User/UserContext';
+import detectEthereumProvider from '@metamask/detect-provider';
 
 export default function Header(props) {
     const { CreateOrGetUserByWallet, loginState, setLoginState } = useUsers();
     const { encryptText } = useContext(UserContext);
 
     const ConnectWallet = async () => {
+        const detectProvider = await detectEthereumProvider();
         setLoginState("londing...")
-        if (window.ethereum) {
+        if (detectProvider) {
             ConnectWallethandleEthereum();
         } else {
             window.addEventListener('ethereum#initialized', ConnectWallethandleEthereum, {
@@ -22,8 +24,9 @@ export default function Header(props) {
 
     const ConnectWallethandleEthereum = async () => {
         const { ethereum } = window;
+        const detectProvider = await detectEthereumProvider();
         if (ethereum && ethereum.isMetaMask) {
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const provider = new ethers.providers.Web3Provider(detectProvider)
             await provider.send("eth_requestAccounts", [])
             const signer = provider.getSigner();
             const walletAdress = encryptText(await signer.getAddress())
@@ -35,7 +38,8 @@ export default function Header(props) {
     }
 
     const getMetamask = async () => {
-        if (window.ethereum) {
+        const detectProvider = await detectEthereumProvider();
+        if (detectProvider) {
             getMetamaskhandleEthereum();
         } else {
             window.addEventListener('ethereum#initialized', getMetamaskhandleEthereum, {
@@ -47,7 +51,8 @@ export default function Header(props) {
 
     const getMetamaskhandleEthereum = async () => {
         try {
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const detectProvider = await detectEthereumProvider();
+            const provider = new ethers.providers.Web3Provider(detectProvider)
             const signer = provider.getSigner();
             const walletAdress = encryptText(await signer.getAddress());
             CreateOrGetUserByWallet(walletAdress);

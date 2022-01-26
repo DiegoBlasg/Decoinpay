@@ -2,6 +2,7 @@ import { ethers } from 'ethers';
 import axios from 'axios';
 import { useContext, useState } from 'react';
 import UserContext from '../../Context/User/UserContext'
+import detectEthereumProvider from '@metamask/detect-provider';
 
 const useUsers = () => {
     const { getProfile, selectedUser, encryptText, decryptText } = useContext(UserContext);
@@ -10,7 +11,8 @@ const useUsers = () => {
     const [balance, setBalance] = useState()
 
     const getBalance = async () => {
-        if (window.ethereum) {
+        const provider = await detectEthereumProvider();
+        if (provider) {
             getBalancehandleEthereum();
         } else {
             window.addEventListener('ethereum#initialized', getBalancehandleEthereum, {
@@ -31,8 +33,8 @@ const useUsers = () => {
     }
 
     const getBalanceWithEthereum = async () => {
+        const provider = await detectEthereumProvider();
         if (selectedUser) {
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
             const balance = await provider.getBalance(decryptText(selectedUser.wallet_id))
             const balanceInEth = ethers.utils.formatEther(balance)
             setBalance(balanceInEth)

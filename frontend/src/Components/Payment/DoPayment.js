@@ -4,6 +4,7 @@ import axios from "axios";
 
 import { ethers } from 'ethers';
 import { useParams } from "react-router-dom";
+import detectEthereumProvider from '@metamask/detect-provider';
 
 
 export default function DoPayment() {
@@ -34,7 +35,8 @@ export default function DoPayment() {
     }
 
     const onSubmit = async () => {
-        if (window.ethereum) {
+        const detectProvider = await detectEthereumProvider();
+        if (detectProvider) {
             onSubmithandleEthereum();
         } else {
             window.addEventListener('ethereum#initialized', onSubmithandleEthereum, {
@@ -57,7 +59,8 @@ export default function DoPayment() {
     const makeTransaction = async (event) => {
         if (selectedUser) {
             try {
-                const provider = new ethers.providers.Web3Provider(window.ethereum)
+                const detectProvider = await detectEthereumProvider();
+                const provider = new ethers.providers.Web3Provider(detectProvider)
                 await provider.send("eth_requestAccounts", [])
                 const signer = provider.getSigner();
                 const tx = await signer.sendTransaction({

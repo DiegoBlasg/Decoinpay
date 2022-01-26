@@ -14,8 +14,6 @@ export default function Pay() {
         const res = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd')
         setValuePrice(res.data.binancecoin.usd * value);
     }
-
-    getPriceOfValue()
     const getTransaction = async () => {
         const res = await axios.get("/api/transactions/admin/" + txnhash)
         setValue(res.data.valueInBNB)
@@ -23,6 +21,7 @@ export default function Pay() {
 
     React.useEffect(() => {
         getTransaction()
+        getPriceOfValue()
     }, [selectedUser])
 
     return (

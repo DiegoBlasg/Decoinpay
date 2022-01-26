@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react';
 import UserContext from '../../../Context/User/UserContext'
 import Modal from 'react-modal';
 import axios from 'axios';
+import detectEthereumProvider from '@metamask/detect-provider';
 
 const customStyles = {
     content: {
@@ -31,7 +32,8 @@ export default function ModalMakeTransaction({ modalIsOpen, setIsOpen, getUserTr
         setIsOpen(false);
     }
     const onSubmit = async () => {
-        if (window.ethereum) {
+        const detectProvider = await detectEthereumProvider();
+        if (detectProvider) {
             onSubmithandleEthereum();
         } else {
             window.addEventListener('ethereum#initialized', onSubmithandleEthereum, {
@@ -44,7 +46,6 @@ export default function ModalMakeTransaction({ modalIsOpen, setIsOpen, getUserTr
     function onSubmithandleEthereum() {
         const { ethereum } = window;
         if (ethereum && ethereum.isMetaMask) {
-
             makeTransaction()
         } else {
             console.log('Please install MetaMask!');
@@ -55,7 +56,8 @@ export default function ModalMakeTransaction({ modalIsOpen, setIsOpen, getUserTr
         event.preventDefault();
         if (selectedUser) {
             try {
-                const provider = new ethers.providers.Web3Provider(window.ethereum)
+                const detectProvider = await detectEthereumProvider();
+                const provider = new ethers.providers.Web3Provider(detectProvider)
                 await provider.send("eth_requestAccounts", [])
                 const signer = provider.getSigner();
                 const tx = await signer.sendTransaction({

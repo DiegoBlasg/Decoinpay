@@ -4,6 +4,7 @@ import React, { useContext, useState } from "react"
 import QRCode from 'react-qr-code';
 import { useParams } from "react-router-dom";
 import UserContext from "../../Context/User/UserContext";
+import detectEthereumProvider from '@metamask/detect-provider';
 
 export default function OnlinePaymentForm() {
 
@@ -19,7 +20,8 @@ export default function OnlinePaymentForm() {
     }
 
     const onSubmit = async () => {
-        if (window.ethereum) {
+        const detectProvider = await detectEthereumProvider();
+        if (detectProvider) {
             onSubmithandleEthereum();
         } else {
             window.addEventListener('ethereum#initialized', onSubmithandleEthereum, {
@@ -41,7 +43,8 @@ export default function OnlinePaymentForm() {
 
     const makeTransaction = async (event) => {
         event.preventDefault()
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const detectProvider = await detectEthereumProvider();
+        const provider = new ethers.providers.Web3Provider(detectProvider)
         await provider.send("eth_requestAccounts", [])
         const signer = provider.getSigner();
         const walletAdress = await signer.getAddress()
