@@ -4,7 +4,7 @@ import QRCode from 'react-qr-code';
 import UserContext from "../../Context/User/UserContext";
 import axios from "axios";
 
-export default function Pay() {
+export default function ReceivePayment() {
     const txnhash = useParams().txnhash;
     const { selectedUser } = useContext(UserContext);
     const [valuePrice, setValuePrice] = useState("")
@@ -29,8 +29,8 @@ export default function Pay() {
             <div className="row shadow mb-4 bg-dark rounded p-3 mx-2 mt-2">
                 <img src="/img/logoblanco3.png" className="mx-auto" style={{ width: "150px" }} alt="logo" />
             </div>
-            <h5 className='text-center text-warning'>Warning<i className="bi bi-exclamation-triangle-fill mx-2"></i></h5>
-            <h5 className='text-center text-warning m-3'>Asegurate de que estais en la blockchain de Binance Smart Chain, podrias perder el dinero sino.</h5>
+            <h4 className='text-center text-warning'>IMPORTANTE<i className="bi bi-exclamation-triangle-fill mx-2"></i></h4>
+            <h5 className='text-center text-warning m-3'>LAS DOS WALLET TIENE QUE SER DE LA BINANCE SMART CHAIN <a target="_blank" href='https://academy.binance.com/es/articles/connecting-metamask-to-binance-smart-chain' style={{ textDecoration: "none", cursor: "pointer" }} className='text-primary'>Como hacerlo</a></h5>
 
             <div className="row shadow mb-4 bg-dark rounded p-3 mx-2 text-white">
                 <div className="d-flex justify-content-center">
@@ -44,8 +44,6 @@ export default function Pay() {
                         }
                     </span>
                 </div>
-
-                <h5 className="text-center my-3">{`https://decoinpay.com/dopayment/${txnhash}`}</h5>
             </div>
 
             <div className="row shadow mb-4 bg-dark rounded p-3 mx-2 text-center">

@@ -22,7 +22,7 @@ export default function Account(props) {
       {props.isPhone ?
         <>
           <div className="row d-flex justify-content-center">
-            <span className="border border-warning text-warning mx-2 p-2 w-auto" style={{ whiteSpace: "nowrap" }}>Balance: {balance ? balance.substring(0, 6) : ""} ETH</span>
+            <span className="border border-warning text-warning mx-2 p-2 w-auto" style={{ whiteSpace: "nowrap" }}>Balance: {balance ? balance.substring(0, 6) : ""} BNB</span>
           </div>
           <div className="row pt-4 d-flex justify-content-center">
             <h3 className="text-white text-center mx-2">TRASANCCIONES</h3>
@@ -37,7 +37,7 @@ export default function Account(props) {
         <>
           <div className="row pt-4">
             <div className="col col-2  d-flex align-items-center justify-content-center">
-              <span className="border border-warning text-warning p-2" style={{ whiteSpace: "nowrap" }}>Balance: {balance ? balance.substring(0, 6) : ""} ETH</span>
+              <span className="border border-warning text-warning p-2" style={{ whiteSpace: "nowrap" }}>Balance: {balance ? balance.substring(0, 6) : ""} BNB</span>
             </div>
             <div className="col col-8 d-flex align-items-center justify-content-center">
               <h3 className="text-white">TRASANCCIONES</h3>

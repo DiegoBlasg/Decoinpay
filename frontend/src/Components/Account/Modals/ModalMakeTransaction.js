@@ -105,15 +105,15 @@ export default function ModalMakeTransaction({ modalIsOpen, setIsOpen, getUserTr
                 <hr className='text-white' />
                 <h2 className='text-white text-center'>Realizar transaccion</h2>
                 <hr className='text-white' />
-                <h5 className='text-center text-warning'>Warning<i className="bi bi-exclamation-triangle-fill mx-2"></i></h5>
-                <h5 className='text-center text-warning my-3'>Asegurate de que los datos estan bien puestos y que tu wallet y a la que envias estais en la misma blockchain, podrias perder el dinero sino.</h5>
+                <h4 className='text-center text-warning'>IMPORTANTE<i className="bi bi-exclamation-triangle-fill mx-2"></i></h4>
+                <h5 className='text-center text-warning my-3'>LAS DOS WALLET TIENE QUE SER DE LA BINANCE SMART CHAIN <a target="_blank" href='https://academy.binance.com/es/articles/connecting-metamask-to-binance-smart-chain' style={{ textDecoration: "none", cursor: "pointer" }} className='text-primary'>Como hacerlo</a></h5>
                 <div className="text-center mx-auto mt-2 mb-4">
                     <h3 className="text-white my-2">Enviar a:</h3>
-                    <input type="text" className="border-primary bg-dark text-white my-2" placeholder="Wallet" required onChange={onImputChangeWallet} maxLength="65" required />
+                    <input type="text" className="w-50 border-primary bg-dark text-white my-2" placeholder="Wallet" required onChange={onImputChangeWallet} maxLength="65" required />
                 </div>
                 <div className="text-center mx-auto mt-2 mb-4">
                     <h3 className="text-white my-2">Importe</h3>
-                    <input type="number" step="any" className=" border-primary bg-dark text-white my-2" placeholder="importe en BNB" required onChange={onImputChangeAmount} required />
+                    <input type="number" step="any" className="w-50 border-primary bg-dark text-white my-2" placeholder="importe en BNB" required onChange={onImputChangeAmount} required />
                 </div>
                 <div className="text-center mt-4">
                     <button className="btn btn-primary">Enviar</button>

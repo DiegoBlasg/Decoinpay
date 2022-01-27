@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { ethers } from 'ethers';
 import useUsers from './Hooks/useUsers'
 import UserContext from '../Context/User/UserContext';
+import detectEthereumProvider from '@metamask/detect-provider';
 
 export default function Header(props) {
     const { CreateOrGetUserByWallet, loginState, setLoginState } = useUsers();
@@ -41,6 +42,9 @@ export default function Header(props) {
         window.ethereum.on("accountsChanged", (accounts) => {
             window.location.reload();
         })
+        window.ethereum.on('chainChanged', (chainId) => {
+            window.location.reload();
+        });
     }
 
     return (
