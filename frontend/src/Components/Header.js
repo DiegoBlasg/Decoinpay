@@ -3,7 +3,6 @@ import React, { useContext } from "react";
 import { ethers } from 'ethers';
 import useUsers from './Hooks/useUsers'
 import UserContext from '../Context/User/UserContext';
-import detectEthereumProvider from '@metamask/detect-provider';
 
 export default function Header(props) {
     const { CreateOrGetUserByWallet, loginState, setLoginState } = useUsers();
