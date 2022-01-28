@@ -61,7 +61,7 @@ const useAllowed_users = (url_id, url_idau) => {
         }
     }
 
-    //deleteAllowed_user is in ../useContracts.js because it need a function from there
+    //deleteAllowed_user is in ./useContracts.js because it need a function from there
 
     return {
         setWallet_id, setAlias, setWallet,

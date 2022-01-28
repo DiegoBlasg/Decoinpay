@@ -95,7 +95,6 @@ const useContract = (url_id) => {
                     name: name,
                 }
                 await axios.put('/api/contracts/' + url_id, updateContract, axiosConfig)
-                //window.location.reload()
             }
         } catch (error) {
             alert("No puedes modificar este contrato")

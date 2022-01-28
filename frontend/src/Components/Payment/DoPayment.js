@@ -43,42 +43,44 @@ export default function DoPayment() {
                     value: ethers.utils.parseEther(amount)
                 })
                 await tx.wait();
-                const recibo = await provider.getTransactionReceipt(tx.hash)
-                const value = tx.value._hex.substring(2)
-                const value2 = ethers.utils.formatEther(parseInt(value, 16).toString())
+                if (tx.chainId == 56) {
+                    const recibo = await provider.getTransactionReceipt(tx.hash)
+                    const value = tx.value._hex.substring(2)
+                    const value2 = ethers.utils.formatEther(parseInt(value, 16).toString())
 
-                const fee = recibo.gasUsed._hex.substring(2)
-                const fee2 = ethers.utils.formatEther(parseInt(fee, 16).toString())
+                    const fee = recibo.gasUsed._hex.substring(2)
+                    const fee2 = ethers.utils.formatEther(parseInt(fee, 16).toString())
 
-                const newDate = new Date()
+                    const newDate = new Date()
 
-                const currentdate = `${newDate.getFullYear()}-${newDate.getMonth() < 10 ? `0${newDate.getMonth() + 1}` : `${newDate.getMonth() + 1}`}-${newDate.getDate()} ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`
+                    const currentdate = `${newDate.getFullYear()}-${newDate.getMonth() < 10 ? `0${newDate.getMonth() + 1}` : `${newDate.getMonth() + 1}`}-${newDate.getDate()} ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`
 
-                const transaction = {
-                    txnHash: tx.hash,
-                    block: recibo.blockNumber,
-                    dateTime: currentdate,
-                    from: recibo.from.toLowerCase(),
-                    to: recibo.to.toLowerCase(),
-                    value: value2,
-                    txnFee: fee2
-                }
-
-                const axiosConfig = {
-                    headers: {
-                        "wallet": selectedUser.wallet_id
+                    const transaction = {
+                        txnHash: tx.hash,
+                        block: recibo.blockNumber,
+                        dateTime: currentdate,
+                        from: recibo.from.toLowerCase(),
+                        to: recibo.to.toLowerCase(),
+                        value: value2,
+                        txnFee: fee2
                     }
-                };
-                await axios.put('/api/users/transactions', transaction, axiosConfig)
 
-                await axios.put('/api/contracts/transactions/' + contract_id, transaction, { headers: { "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876") } })
-                const updateOTransaction = {
-                    transactionHash: tx.hash
+                    const axiosConfig = {
+                        headers: {
+                            "wallet": selectedUser.wallet_id
+                        }
+                    };
+                    await axios.put('/api/users/transactions', transaction, axiosConfig)
+
+                    await axios.put('/api/contracts/transactions/' + contract_id, transaction, { headers: { "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876") } })
+                    const updateOTransaction = {
+                        transactionHash: tx.hash
+                    }
+                    await axios.put("/api/transactions/" + txnhash, updateOTransaction, axiosConfig)
+                    window.location.href = "/account"
+                } else {
+                    alert("La transaccion no ha sido en la bsc")
                 }
-                await axios.put("/api/transactions/" + txnhash, updateOTransaction, axiosConfig)
-                window.location.href = "/account"
-                console.log(tx);
-                console.log(recibo);
             } catch (error) {
                 console.log(error);
                 alert("Algo ha salido mal")

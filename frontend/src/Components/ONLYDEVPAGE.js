@@ -9,6 +9,8 @@ export default function OnlyDevPage() {
             return_url: "https://decoinpay.com/account",
             cancel_url: "https://decoinpay.com/onlydevpage"
         };
+
+        //Aqui para que funcione hay que cambial los datos con los tuyos
         const authorization = {
             headers: {
                 contractid: '61eb172c76cef5cdba6cf5c3',

@@ -27,12 +27,12 @@ export default function ModalReceiveTransaction({ modalIsOpen, setIsOpen, contra
     const { selectedUser } = useContext(UserContext);
     const [value, setValue] = useState()
 
-    const cambiardolarvalor = async (num) => {
+    const changeDollarValue = async (num) => {
         const res = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd')
         document.getElementById("USD").value = num * res.data.binancecoin.usd
         setValue(document.getElementById("BNB").value)
     }
-    const cambiarcoinvalor = async (num) => {
+    const changeCoinValue = async (num) => {
         const res = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd')
         document.getElementById("BNB").value = num / res.data.binancecoin.usd
         setValue(document.getElementById("BNB").value)
@@ -72,10 +72,10 @@ export default function ModalReceiveTransaction({ modalIsOpen, setIsOpen, contra
                 <hr className='text-white' />
                 <div className="text-center mx-auto mt-2 mb-4">
                     <h3 className="text-white my-2">Importe en BNB</h3>
-                    <input id='BNB' type="number" step="any" className="w-50 border-primary bg-dark text-white my-2" placeholder="Importe" onKeyUp={(e) => cambiardolarvalor(e.target.value)} maxLength="19" required />
+                    <input id='BNB' type="number" step="any" className="w-50 border-primary bg-dark text-white my-2" placeholder="Importe" onKeyUp={(e) => changeDollarValue(e.target.value)} maxLength="19" required />
 
                     <h3 className="text-white my-2">Importe en USD</h3>
-                    <input id='USD' type="number" step="any" className="w-50 border-primary bg-dark text-white my-2" placeholder="Importe" onKeyUp={(e) => cambiarcoinvalor(e.target.value)} maxLength="19" />
+                    <input id='USD' type="number" step="any" className="w-50 border-primary bg-dark text-white my-2" placeholder="Importe" onKeyUp={(e) => changeCoinValue(e.target.value)} maxLength="19" />
 
                 </div>
                 <div className="text-center mt-4">
