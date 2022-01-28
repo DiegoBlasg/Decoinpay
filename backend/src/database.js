@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const URI = process.env.MONGODB_URI ? process.env.MONGODB_URI : 'mongodb://localhost/cryptopagos';
+const URI = process.env.MONGODB_URI || 'mongodb://localhost/cryptopagos';
 
 mongoose.connect(URI, {
     useNewUrlParser: true,

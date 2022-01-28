@@ -22,7 +22,7 @@ export default function Account(props) {
       {props.isPhone ?
         <>
           <div className="row d-flex justify-content-center">
-            <span className="border border-warning text-warning mx-2 p-2 w-auto" style={{ whiteSpace: "nowrap" }}>Balance: {balance ? balance.substring(0, 6) : ""} ETH</span>
+            <span className="border border-warning text-warning mx-2 p-2 w-auto" style={{ whiteSpace: "nowrap" }}>Balance: {balance ? balance.substring(0, 6) : ""} BNB</span>
           </div>
           <div className="row pt-4 d-flex justify-content-center">
             <h3 className="text-white text-center mx-2">TRASANCCIONES</h3>
@@ -37,7 +37,7 @@ export default function Account(props) {
         <>
           <div className="row pt-4">
             <div className="col col-2  d-flex align-items-center justify-content-center">
-              <span className="border border-warning text-warning p-2" style={{ whiteSpace: "nowrap" }}>Balance: {balance ? balance.substring(0, 6) : ""} ETH</span>
+              <span className="border border-warning text-warning p-2" style={{ whiteSpace: "nowrap" }}>Balance: {balance ? balance.substring(0, 6) : ""} BNB</span>
             </div>
             <div className="col col-8 d-flex align-items-center justify-content-center">
               <h3 className="text-white">TRASANCCIONES</h3>
@@ -73,11 +73,11 @@ export default function Account(props) {
               {
                 transactions.slice(0).reverse().map(transaction => (
                   <tr key={transaction.hash}>
-                    <th scope="row"><a href="/cuenta" style={{ textDecoration: "none" }} className="link-info">{(transaction.hash).substring(0, 20) + "..."}</a></th>
-                    <td style={{ whiteSpace: "nowrap" }}><a href="/cuenta" style={{ textDecoration: "none" }} className="link-info">{transaction.block}</a></td>
+                    <th scope="row"><a target="_blank" href={`https://bscscan.com/tx/${transaction.hash}`} style={{ textDecoration: "none" }} className="link-info">{(transaction.hash).substring(0, 20) + "..."}</a></th>
+                    <td style={{ whiteSpace: "nowrap" }}><a target="_blank" href={`https://bscscan.com/block/${transaction.block}`} style={{ textDecoration: "none" }} className="link-info">{transaction.block}</a></td>
                     <td style={{ whiteSpace: "nowrap" }}>{transaction.age}</td>
-                    <td style={{ whiteSpace: "nowrap" }}>{(transaction.from).substring(0, 20) + "..."}</td>
-                    <td style={{ whiteSpace: "nowrap" }}><a href="/cuenta" style={{ textDecoration: "none" }} className="link-info">{(transaction.to).substring(0, 20) + "..."}</a></td>
+                    <td style={{ whiteSpace: "nowrap" }}><a target="_blank" href={`https://bscscan.com/address/${transaction.from}`} style={{ textDecoration: "none" }} className="link-info">{(transaction.from).substring(0, 20) + "..."}</a></td>
+                    <td style={{ whiteSpace: "nowrap" }}><a target="_blank" href={`https://bscscan.com/address/${transaction.to}`} style={{ textDecoration: "none" }} className="link-info">{(transaction.to).substring(0, 20) + "..."}</a></td>
                     <td style={{ whiteSpace: "nowrap" }}>{transaction.value}</td>
                     <td style={{ whiteSpace: "nowrap", fontSize: "12px" }} className='text-muted'>{transaction.txn_fee}</td>
                   </tr>

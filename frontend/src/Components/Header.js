@@ -41,8 +41,10 @@ export default function Header(props) {
         window.ethereum.on("accountsChanged", (accounts) => {
             window.location.reload();
         })
+        window.ethereum.on('chainChanged', (chainId) => {
+            window.location.reload();
+        });
     }
-
 
     return (
         props.isPhone ?

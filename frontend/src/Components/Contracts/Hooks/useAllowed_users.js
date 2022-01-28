@@ -16,7 +16,7 @@ const useAllowed_users = (url_id, url_idau) => {
                     "wallet": selectedUser.wallet_id
                 }
             };
-            const res = await axios.get('http://localhost:4000/contracts/alloweduser/' + url_id + "/" + url_idau, axiosConfig)
+            const res = await axios.get('/api/contracts/alloweduser/' + url_id + "/" + url_idau, axiosConfig)
             setAlias(res.data.alias)
             setWallet_id(res.data.wallet_id)
         }
@@ -35,7 +35,7 @@ const useAllowed_users = (url_id, url_idau) => {
                     alias: alias,
                     wallet_id: walletInLowerCase
                 }
-                await axios.put('http://localhost:4000/contracts/alloweduser/' + url_id, newAllowed_user, axiosConfig)
+                await axios.put('/api/contracts/alloweduser/' + url_id, newAllowed_user, axiosConfig)
                 window.location.reload()
             } catch (error) {
                 alert(error.response.data.mensaje)
@@ -54,14 +54,14 @@ const useAllowed_users = (url_id, url_idau) => {
                 const newAllowed_user = {
                     alias: alias
                 }
-                await axios.post('http://localhost:4000/contracts/alloweduser/' + url_id + "/" + url_idau, newAllowed_user, axiosConfig)
+                await axios.post('/api/contracts/alloweduser/' + url_id + "/" + url_idau, newAllowed_user, axiosConfig)
             } catch (error) {
                 alert(error.response.data.mensaje)
             }
         }
     }
 
-    //deleteAllowed_user is in ../useContracts.js because it need a function from there
+    //deleteAllowed_user is in ./useContracts.js because it need a function from there
 
     return {
         setWallet_id, setAlias, setWallet,

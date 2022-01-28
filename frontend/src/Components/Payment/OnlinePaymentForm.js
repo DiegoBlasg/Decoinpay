@@ -57,20 +57,20 @@ export default function OnlinePaymentForm() {
                 "wallet": encryptText(walletAdress.toLowerCase())
             }
         };
-        await axios.put('http://localhost:4000/users/transactions', newtransaction, axiosConfig)
+        await axios.put('/api/users/transactions', newtransaction, axiosConfig)
 
-        await axios.put('http://localhost:4000/contracts/transactions/' + transaction.contract_id, newtransaction, { headers: { "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876") } })
+        await axios.put('/api/contracts/transactions/' + transaction.contract_id, newtransaction, { headers: { "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876") } })
 
         const updateOTransaction = {
             transactionHash: tx.hash
         }
-        await axios.put("http://localhost:4000/transactions/" + hash, updateOTransaction, axiosConfig)
+        await axios.put("/api/transactions/" + hash, updateOTransaction, axiosConfig)
 
         window.location.href = transaction.return_url
     }
 
     const getTransaction = async () => {
-        const res = await axios.get("http://localhost:4000/transactions/" + hash)
+        const res = await axios.get("/api/transactions/" + hash)
         setTransaction(res.data)
         getPriceOfValue(res.data.valueInBNB)
     }
@@ -85,13 +85,13 @@ export default function OnlinePaymentForm() {
             <div className="row shadow mb-4 bg-dark rounded p-3 mx-2 mt-2">
                 <img src="/img/logoblanco3.png" className="mx-auto" style={{ width: "150px" }} alt="logo" />
             </div>
-            <h5 className='text-center text-warning'>Warning<i className="bi bi-exclamation-triangle-fill mx-2"></i></h5>
-            <h5 className='text-center text-warning m-3'>Asegurate de que estais en la blockchain de Binance Smart Chain, podrias perder el dinero sino.</h5>
+            <h4 className='text-center text-warning'>IMPORTANTE<i className="bi bi-exclamation-triangle-fill mx-2"></i></h4>
+            <h5 className='text-center text-warning m-3'>LAS DOS WALLET TIENE QUE SER DE LA BINANCE SMART CHAIN <a target="_blank" href='https://academy.binance.com/es/articles/connecting-metamask-to-binance-smart-chain' style={{ textDecoration: "none", cursor: "pointer" }} className='text-primary'>Como hacerlo</a></h5>
 
             <div className="row shadow mb-4 bg-dark rounded p-3 mx-2">
                 <div className="d-flex justify-content-center">
                     <span className="bg-dark border border-3 border-white text-white">
-                        <QRCode value={`http://localhost:3000/dopayment/${hash}`} />
+                        <QRCode value={`https://decoinpay.com/dopayment/${hash}`} />
                     </span>
                 </div>
             </div>

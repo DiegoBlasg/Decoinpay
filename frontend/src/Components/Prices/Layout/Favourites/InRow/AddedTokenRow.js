@@ -26,7 +26,6 @@ export default function AddedTokenRow(props) {
                 <td>-</td>
                 <td style={{ whiteSpace: "nowrap" }}>-</td>
                 <td style={{ whiteSpace: "nowrap" }}>-</td>
-                <td style={{ whiteSpace: "nowrap" }}>-</td>
             </tr>
         ))
     )

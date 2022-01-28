@@ -23,7 +23,7 @@ export default function DoPayment() {
                     "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876")
                 }
             };
-            const res = await axios.get('http://localhost:4000/contracts/admin/contractinfo/' + contract_id, axiosConfig)
+            const res = await axios.get('/api/contracts/admin/contractinfo/' + contract_id, axiosConfig)
             setWallet(res.data)
         }
     }
@@ -42,45 +42,49 @@ export default function DoPayment() {
                     to: wallet,
                     value: ethers.utils.parseEther(amount)
                 })
-                const recibo = await provider.getTransactionReceipt(tx.hash)
-                const value = tx.value._hex.substring(2)
-                const value2 = ethers.utils.formatEther(parseInt(value, 16).toString())
+                await tx.wait();
+                if (tx.chainId == 56) {
+                    const recibo = await provider.getTransactionReceipt(tx.hash)
+                    const value = tx.value._hex.substring(2)
+                    const value2 = ethers.utils.formatEther(parseInt(value, 16).toString())
 
-                const fee = recibo.gasUsed._hex.substring(2)
-                const fee2 = ethers.utils.formatEther(parseInt(fee, 16).toString())
+                    const fee = recibo.gasUsed._hex.substring(2)
+                    const fee2 = ethers.utils.formatEther(parseInt(fee, 16).toString())
 
-                const newDate = new Date()
+                    const newDate = new Date()
 
-                const currentdate = `${newDate.getFullYear()}-${newDate.getMonth() < 10 ? `0${newDate.getMonth() + 1}` : `${newDate.getMonth() + 1}`}-${newDate.getDate()} ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`
+                    const currentdate = `${newDate.getFullYear()}-${newDate.getMonth() < 10 ? `0${newDate.getMonth() + 1}` : `${newDate.getMonth() + 1}`}-${newDate.getDate()} ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`
 
-                const transaction = {
-                    txnHash: tx.hash,
-                    block: recibo.blockNumber,
-                    dateTime: currentdate,
-                    from: recibo.from.toLowerCase(),
-                    to: recibo.to.toLowerCase(),
-                    value: value2,
-                    txnFee: fee2
-                }
-
-                const axiosConfig = {
-                    headers: {
-                        "wallet": selectedUser.wallet_id
+                    const transaction = {
+                        txnHash: tx.hash,
+                        block: recibo.blockNumber,
+                        dateTime: currentdate,
+                        from: recibo.from.toLowerCase(),
+                        to: recibo.to.toLowerCase(),
+                        value: value2,
+                        txnFee: fee2
                     }
-                };
-                await axios.put('http://localhost:4000/users/transactions', transaction, axiosConfig)
 
-                await axios.put('http://localhost:4000/contracts/transactions/' + contract_id, transaction, { headers: { "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876") } })
-                const updateOTransaction = {
-                    transactionHash: tx.hash
+                    const axiosConfig = {
+                        headers: {
+                            "wallet": selectedUser.wallet_id
+                        }
+                    };
+                    await axios.put('/api/users/transactions', transaction, axiosConfig)
+
+                    await axios.put('/api/contracts/transactions/' + contract_id, transaction, { headers: { "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876") } })
+                    const updateOTransaction = {
+                        transactionHash: tx.hash
+                    }
+                    await axios.put("/api/transactions/" + txnhash, updateOTransaction, axiosConfig)
+                    window.location.href = "/account"
+                } else {
+                    alert("La transaccion no ha sido en la bsc")
                 }
-                await axios.put("http://localhost:4000/transactions/" + txnhash, updateOTransaction, axiosConfig)
-
             } catch (error) {
                 console.log(error);
                 alert("Algo ha salido mal")
             }
-            window.location.href = "/account"
 
         } else {
             alert("Conecta metamask para poder continuar")
@@ -88,7 +92,7 @@ export default function DoPayment() {
 
     }
     const getTransaction = async () => {
-        const res = await axios.get("http://localhost:4000/transactions/admin/" + txnhash)
+        const res = await axios.get("/api/transactions/admin/" + txnhash)
         setAmount(res.data.valueInBNB)
         setContract_id(res.data.contract_id)
         if (contract_id) {
@@ -113,8 +117,8 @@ export default function DoPayment() {
             <div className="row shadow mb-4 bg-dark rounded p-3 mx-2 mt-2">
                 <img src="/img/logoblanco3.png" className="mx-auto" style={{ width: "150px" }} alt="logo" />
             </div>
-            <h5 className='text-center text-warning'>Warning<i className="bi bi-exclamation-triangle-fill mx-2"></i></h5>
-            <h5 className='text-center text-warning m-3'>Asegurate de que estais en la blockchain de Binance Smart Chain, podrias perder el dinero sino.</h5>
+            <h4 className='text-center text-warning'>IMPORTANTE<i className="bi bi-exclamation-triangle-fill mx-2"></i></h4>
+            <h5 className='text-center text-warning m-3'>LAS DOS WALLET TIENE QUE SER DE LA BINANCE SMART CHAIN <a target="_blank" href='https://academy.binance.com/es/articles/connecting-metamask-to-binance-smart-chain' style={{ textDecoration: "none", cursor: "pointer" }} className='text-primary'>Como hacerlo</a></h5>
 
 
             <div className="row shadow mb-4 bg-dark rounded p-3 mx-2 text-center">

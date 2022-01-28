@@ -1,6 +1,5 @@
 import React from 'react';
 import Modal from 'react-modal';
-import useContract from '../../Hooks/useContracts';
 
 const customStyles = {
     content: {
@@ -21,7 +20,6 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 export default function ModalAreYouSure({ modalIsOpen, setIsOpen, information, text, functionWhenDelete }) {
-    const { deleteContract } = useContract();
 
     const closeModal = () => {
         setIsOpen(false);

@@ -19,15 +19,15 @@ export default function ContractInfoHeader(props) {
             {
                 props.isPhone ?
                     <>
-                        <div className="row mx-3">
-                            <div className="col col-2 text-primary">
+                        <div className="row">
+                            <div className="col col-2 text-primary d-flex align-items-center">
                                 <Link to={"/contracts"}><i className="bi bi-arrow-left-square-fill text-white fs-1"></i></Link>
                             </div>
                             <div className="col col-8">
                                 <h3 className="text-white text-center">{info.name}</h3>
                                 <h5 className="text-white text-center">{shortID}</h5>
                             </div>
-                            <div className="col col-2 text-primary fs-1">
+                            <div className="col col-2 text-primary fs-1 d-flex align-items-center">
                                 {
                                     props.isOwner ?
                                         <Link to={"/ajustes/" + info._id}><i className="bi bi-gear"></i></Link>
