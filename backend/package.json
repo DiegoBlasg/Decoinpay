@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": {
+    "decoinview": "./terminalApp/index.js"
+  },
   "scripts": {
     "start": "nodemon ./src/index.js"
   },
@@ -10,10 +13,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "commander": "^9.0.0",
     "cors": "^2.8.5",
     "crypto-js": "^4.1.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.2",
+    "file-system": "^2.2.2",
     "mongoose": "^6.1.3"
   },
   "devDependencies": {

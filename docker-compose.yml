@@ -24,15 +24,6 @@ services:
       - PORT=4000
       - PASSWORD=4321
       - ADMINPASSWORD=9876
-  terminal-app:
-    container_name: terminal-app
-    build: ./terminalApp
-    ports:
-      - "5000:5000"
-    links:
-      - mongo
-    environment:
-      - MONGODB_URI=mongodb://mongo/cryptopagosdb
   mongo:
     image: mongo
     ports:
