@@ -10,4 +10,6 @@ RUN npm install
 
 RUN npm link
 
+EXPOSE 5000
+
 COPY . .

@@ -27,6 +27,8 @@ services:
   terminal-app:
     container_name: terminal-app
     build: ./terminalApp
+    ports:
+      - "5000:5000"
     links:
       - mongo
     environment:
