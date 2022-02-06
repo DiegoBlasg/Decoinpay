@@ -21,7 +21,7 @@ txncommand.info = async () => {
 }
 
 txncommand.info_f = async (file) => {
-    fs.writeFile(`./src/files/transactions/${file}.json`, JSON.stringify(txn))
+    fs.writeFile(`./decoinviewfiles/transactions/${file}.json`, JSON.stringify(txn))
     console.log(`file ${file}.json created`);
 }
 txncommand.info_t = async (txnid) => {

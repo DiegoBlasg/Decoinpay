@@ -18,7 +18,7 @@ contractcommand.info = async () => {
 }
 
 contractcommand.info_f = async (file) => {
-    fs.writeFile(`./src/files/contracts/${file}.json`, JSON.stringify(contracts))
+    fs.writeFile(`./decoinviewfiles/contracts/${file}.json`, JSON.stringify(contracts))
     console.log(`file ${file}.json created`);
 }
 

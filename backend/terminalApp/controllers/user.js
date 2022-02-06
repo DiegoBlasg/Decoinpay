@@ -18,7 +18,7 @@ usercommand.info = async () => {
 }
 
 usercommand.info_f = async (file) => {
-    fs.writeFile(`./src/files/users/${file}.json`, JSON.stringify(users))
+    fs.writeFile(`./decoinviewfiles/users/${file}.json`, JSON.stringify(users))
     console.log(`file ${file}.json created`);
 }
 
