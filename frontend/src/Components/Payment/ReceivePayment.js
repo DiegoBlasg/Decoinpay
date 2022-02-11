@@ -38,7 +38,7 @@ export default function ReceivePayment() {
                         {
                             selectedUser ?
 
-                                <QRCode value={`https://decoinpay.com/dopayment/${txnhash}`} />
+                                <QRCode value={`https://decoinpay.xyz/dopayment/${txnhash}`} />
                                 :
                                 <></>
                         }
