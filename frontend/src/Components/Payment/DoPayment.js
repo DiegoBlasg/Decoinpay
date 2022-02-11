@@ -9,6 +9,8 @@ import { useParams } from "react-router-dom";
 export default function DoPayment() {
     const txnhash = useParams().txnhash;
 
+    const ID_BLOCKCHAIN_BSC = 56;
+
     const { selectedUser, encryptText } = useContext(UserContext);
 
     const [wallet, setWallet] = useState("");
@@ -43,7 +45,7 @@ export default function DoPayment() {
                     value: ethers.utils.parseEther(amount)
                 })
                 await tx.wait();
-                if (tx.chainId == 56) {
+                if (tx.chainId == ID_BLOCKCHAIN_BSC) {
                     const recibo = await provider.getTransactionReceipt(tx.hash)
                     const value = tx.value._hex.substring(2)
                     const value2 = ethers.utils.formatEther(parseInt(value, 16).toString())

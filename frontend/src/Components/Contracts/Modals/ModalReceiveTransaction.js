@@ -54,7 +54,7 @@ export default function ModalReceiveTransaction({ modalIsOpen, setIsOpen, contra
             }
             const res = await axios.post("/api/transactions/admin/" + contractid, newTransaction, axiosConfig)
             console.log(res);
-            window.location.href = "/receivepayment/" + res.data.hash
+            window.location.href = "/recivepayment/" + res.data.hash
         }
     }
     return (

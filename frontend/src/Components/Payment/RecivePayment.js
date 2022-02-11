@@ -4,11 +4,12 @@ import QRCode from 'react-qr-code';
 import UserContext from "../../Context/User/UserContext";
 import axios from "axios";
 
-export default function ReceivePayment() {
+export default function RecivePayment() {
     const txnhash = useParams().txnhash;
     const { selectedUser } = useContext(UserContext);
     const [valuePrice, setValuePrice] = useState("")
     const [value, setValue] = useState()
+    const [isPayed, setIsPayed] = useState(false)
 
     const getPriceOfValue = async () => {
         const res = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd')
@@ -18,7 +19,10 @@ export default function ReceivePayment() {
         const res = await axios.get("/api/transactions/admin/" + txnhash)
         setValue(res.data.valueInBNB)
     }
-
+    const CheckIsPayed = async () => {
+        const res = await axios.get("/api/transactions/admin/" + txnhash)
+        res.data.ispaid ? setIsPayed(true) : setIsPayed(false)
+    }
     React.useEffect(() => {
         getTransaction()
         getPriceOfValue()
@@ -54,6 +58,19 @@ export default function ReceivePayment() {
                     <h2 className="text-white">{value} BNB</h2>
                     <h4 className="text-success">{valuePrice} $</h4>
                 </div>
+            </div>
+            {
+                isPayed ?
+                    <div className="text-center shadow mb-4 bg-success rounded p-3 mx-2 text-center">
+                        <h4 className='text-center text-dark'>PAGO COMPLETADO<i class="bi bi-check-square-fill mx-2"></i></h4>
+                    </div>
+                    :
+                    <div className="text-center shadow mb-4 bg-danger rounded p-3 mx-2 text-center">
+                        <h4 className='text-center text-dark'>NO HA SIDO PAGADO<i class="bi bi-x-octagon-fill mx-2"></i></h4>
+                    </div>
+            }
+            <div className="text-center shadow mb-4 bg-dark rounded p-3 mx-2 text-center">
+                <button className="btn btn-primary my-2 fs-5 py-2" onClick={() => CheckIsPayed()}>Comprobar pago</button>
             </div>
         </div>
     )

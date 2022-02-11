@@ -15,7 +15,7 @@ import ContractsSettings from '../Components/Contracts/Layout/ContractsSettings'
 
 import UserState from '../Context/User/UserState';
 import CoinInfo from '../Components/CoinInfo';
-import ReceivePayment from '../Components/Payment/ReceivePayment';
+import RecivePayment from '../Components/Payment/RecivePayment';
 import DoPayment from '../Components/Payment/DoPayment';
 import Api from '../Components/Api/Api';
 import OnlyDevPage from '../Components/ONLYDEVPAGE';
@@ -65,8 +65,8 @@ function Routes() {
                         <OnlinePaymentForm />
                     </Route>
 
-                    <Route path="/receivepayment/:txnhash">
-                        <ReceivePayment />
+                    <Route path="/recivepayment/:txnhash">
+                        <RecivePayment />
                     </Route>
 
                     <Route path="/dopayment/:txnhash">
