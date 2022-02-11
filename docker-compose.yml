@@ -63,8 +63,8 @@ services:
       - nginx-proxy
       - letsencrypt
     environment: 
-      - VIRTUAL_HOST=decoinpay.xyz,www.decoinpay.xyz
-      - LETSENCRYPT_HOST=decoinpay.xyz,www.decoinpay.xyz
+      - VIRTUAL_HOST=decoinpay.com,www.decoinpay.com
+      - LETSENCRYPT_HOST=decoinpay.com,www.decoinpay.com
     restart: always
 volumes:
   certs:

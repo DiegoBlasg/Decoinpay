@@ -42,7 +42,7 @@ export default function RecivePayment() {
                         {
                             selectedUser ?
 
-                                <QRCode value={`https://decoinpay.xyz/dopayment/${txnhash}`} />
+                                <QRCode value={`https://decoinpay.com/dopayment/${txnhash}`} />
                                 :
                                 <></>
                         }
@@ -62,11 +62,11 @@ export default function RecivePayment() {
             {
                 isPayed ?
                     <div className="text-center shadow mb-4 bg-success rounded p-3 mx-2 text-center">
-                        <h4 className='text-center text-dark'>PAGO COMPLETADO<i class="bi bi-check-square-fill mx-2"></i></h4>
+                        <h4 className='text-center text-dark'>PAGO COMPLETADO<i className="bi bi-check-square-fill mx-2"></i></h4>
                     </div>
                     :
                     <div className="text-center shadow mb-4 bg-danger rounded p-3 mx-2 text-center">
-                        <h4 className='text-center text-dark'>NO HA SIDO PAGADO<i class="bi bi-x-octagon-fill mx-2"></i></h4>
+                        <h4 className='text-center text-dark'>NO HA SIDO PAGADO<i className="bi bi-x-octagon-fill mx-2"></i></h4>
                     </div>
             }
             <div className="text-center shadow mb-4 bg-dark rounded p-3 mx-2 text-center">

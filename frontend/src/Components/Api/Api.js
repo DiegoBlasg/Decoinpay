@@ -20,7 +20,7 @@ export default function Api() {
                     <button className="btn btn-primary fs-3 mb-4" onClick={() => setModalGetApi(true)}>Utilizar la api</button>
                 </div>
                 <div className="d-flex justify-content-center my-4 mb-2 text-white">
-                    <h4>www.decoinpay.xyz/</h4>
+                    <h4>www.decoinpay.com/</h4>
                 </div>
             </div>
             <div className="d-flex justify-content-center align-items-center shadow mb-4 bg-dark rounded p-3 mx-2 text-white" style={{ cursor: "pointer" }} onClick={() => setPaymentAddress(!paymentAddress)}>
@@ -30,7 +30,7 @@ export default function Api() {
             {
                 paymentAddress ?
                     <div className="shadow mb-4 bg-dark rounded p-3 text-center text-white py-4">
-                        <h4>www.decoinpay.xyz/pay/<font className="text-success ">has-de-la-transaccion</font></h4>
+                        <h4>www.decoinpay.com/pay/<font className="text-success ">has-de-la-transaccion</font></h4>
                     </div>
                     :
                     <></>
