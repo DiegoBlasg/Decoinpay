@@ -30,13 +30,14 @@ export default function Api() {
             {
                 paymentAddress ?
                     <div className="shadow mb-4 bg-dark rounded p-3 text-center text-white py-4">
-                        <h4>www.decoinpay.com/pay/<font className="text-success ">has-de-la-transaccion</font></h4>
+                        <h5 className="my-2">Este es el link al que se deberá redireccionar al usuario para que realice la transacción</h5>
+                        <h4>www.decoinpay.com/dopayment/<font className="text-success ">has-de-la-transaccion</font></h4>
                     </div>
                     :
                     <></>
             }
             <div className="d-flex justify-content-center align-items-center shadow mb-4 bg-dark rounded p-3 mx-2 text-white" style={{ cursor: "pointer" }} onClick={() => setModel(!model)}>
-                <h2>Model de datos</h2>
+                <h2>Modelo de datos</h2>
                 <i className={`bi bi-caret-${model ? "up" : "down"}-fill mx-3 fs-3`}></i>
             </div>
             {

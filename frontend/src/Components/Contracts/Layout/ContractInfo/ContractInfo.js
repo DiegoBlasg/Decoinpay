@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useParams } from 'react-router-dom';
 import ContractInfoHeader from "./ContractInfoHeader";
 import useContract from "../../Hooks/useContracts";
@@ -8,7 +8,14 @@ export default function ContractInfo(props) {
     const contract_id = useParams().id;
     const { selectedUser } = useContext(UserContext);
     const { isOwner, contracts, transactions, getOneContractInfo } = useContract(contract_id);
+    const [search, setSearch] = useState("");
 
+    const filteredTransactions = transactions.filter((transaction) =>
+        transaction.hash.toLowerCase().includes(search.toLowerCase()) ||
+        transaction.block.toLowerCase().includes(search.toLowerCase()) ||
+        transaction.from.toLowerCase().includes(search.toLowerCase()) ||
+        transaction.to.toLowerCase().includes(search.toLowerCase())
+    )
     React.useEffect(() => {
         getOneContractInfo();
     }, [selectedUser])
@@ -19,7 +26,7 @@ export default function ContractInfo(props) {
 
             <div className="row pb-5 pt-4">
                 <form className="d-flex">
-                    <input className="form-control me-2" style={{ height: "35px" }} type="search" placeholder="Search" aria-label="Search" />
+                    <input className="form-control me-2" style={{ height: "50px" }} onChange={e => setSearch(e.target.value)} type="search" placeholder="Search" aria-label="Search" />
                 </form>
             </div>
             <div className="row table-responsive">
@@ -37,7 +44,7 @@ export default function ContractInfo(props) {
                     </thead>
                     <tbody>
                         {
-                            transactions.slice(0).reverse().map(transaction => (
+                            filteredTransactions.slice(0).reverse().map(transaction => (
                                 <tr key={transaction.hash}>
                                     <th scope="row"><a target="_blank" href={`https://bscscan.com/tx/${transaction.hash}`} style={{ textDecoration: "none" }} className="link-info">{(transaction.hash).substring(0, 20) + "..."}</a></th>
                                     <td style={{ whiteSpace: "nowrap" }}><a target="_blank" href={`https://bscscan.com/block/${transaction.block}`} style={{ textDecoration: "none" }} className="link-info">{transaction.block}</a></td>

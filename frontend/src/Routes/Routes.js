@@ -73,7 +73,7 @@ function Routes() {
                         <DoPayment />
                     </Route>
 
-                    <Route path="/api">
+                    <Route path="/apiinformation">
                         <Api isPhone={phone} />
                     </Route>
                     <Route path="/onlydevpage">

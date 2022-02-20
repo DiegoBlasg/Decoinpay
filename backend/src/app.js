@@ -1,13 +1,16 @@
-const expres = require('express');
+const express = require('express');
 const cors = require('cors');
 const app = expres();
 
 // settings
 app.set('port', process.env.PORT || 4000)
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static("build"));
+}
 
 // middlewares
 app.use(cors());
-app.use(expres.json());
+app.use(express.json());
 
 // routes
 app.use('/api/contracts', require('./routes/contracts'))

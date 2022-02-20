@@ -12,7 +12,7 @@ export default function Header(props) {
         setLoginState("londing...")
         if (!window.ethereum) {
             alert("Instale metamask")
-            setLoginState("Conect")
+            setLoginState("Connect")
             return;
         }
         const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -65,7 +65,7 @@ export default function Header(props) {
                             <Link className="nav-link text-light" to="/account">Cuenta</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link text-light" to="/api">API</Link>
+                            <Link className="nav-link text-light" to="/apiinformation">API</Link>
                         </li>
                     </ul>
                 </div>
@@ -87,7 +87,7 @@ export default function Header(props) {
                             <Link className="nav-link text-light" to="/account">Cuenta</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link text-light" to="/api">API</Link>
+                            <Link className="nav-link text-light" to="/apiinformation">API</Link>
                         </li>
                     </ul>
                     <button type="button" className="btn btn-primary text-white fs-5" onClick={() => ConnectWallet()}>{loginState}</button>

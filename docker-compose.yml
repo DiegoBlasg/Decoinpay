@@ -24,6 +24,8 @@ services:
       - PORT=4000
       - PASSWORD=4321
       - ADMINPASSWORD=9876
+      - NODE_ENV=production
+}
   mongo:
     image: mongo
     ports:
