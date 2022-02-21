@@ -23,7 +23,7 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 export default function ModalMakeTransaction({ modalIsOpen, setIsOpen, getUserTransactions, getBalance }) {
-    const { selectedUser } = useContext(UserContext);
+    const { selectedUser, encryptText } = useContext(UserContext);
     const [amount, setAmount] = useState("");
     const [wallet, setWallet] = useState("");
 
@@ -63,12 +63,18 @@ export default function ModalMakeTransaction({ modalIsOpen, setIsOpen, getUserTr
                     txnFee: fee2
                 }
 
-                const axiosConfig = {
+                const axiosConfigTxnFrom = {
                     headers: {
                         "wallet": selectedUser.wallet_id
                     }
                 };
-                await axios.put('/api/users/transactions', transaction, axiosConfig)
+                const axiosConfigTxnTo = {
+                    headers: {
+                        "wallet": encryptText(recibo.to.toLowerCase())
+                    }
+                };
+                await axios.put('/api/users/transactions', transaction, axiosConfigTxnFrom)
+                await axios.put('/api/users/transactions', transaction, axiosConfigTxnTo)
                 getUserTransactions()
                 getBalance()
             } catch (error) {
