@@ -16,11 +16,11 @@ export default function RecivePayment() {
         setValuePrice(res.data.binancecoin.usd * value);
     }
     const getTransaction = async () => {
-        const res = await axios.get("/api/transactions/admin/" + txnhash)
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/transactions/admin/` + txnhash)
         setValue(res.data.valueInBNB)
     }
     const CheckIsPayed = async () => {
-        const res = await axios.get("/api/transactions/admin/" + txnhash)
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/transactions/admin/` + txnhash)
         res.data.ispaid ? setIsPayed(true) : setIsPayed(false)
     }
     React.useEffect(() => {
@@ -46,9 +46,9 @@ export default function RecivePayment() {
                                 :
                                 <></>
                         }
-                    </span>
-                </div>
-            </div>
+                    </span >
+                </div >
+            </div >
 
             <div className="row shadow mb-4 bg-dark rounded p-3 mx-2 text-center">
                 <div>
@@ -72,6 +72,6 @@ export default function RecivePayment() {
             <div className="text-center shadow mb-4 bg-dark rounded p-3 mx-2 text-center">
                 <button className="btn btn-primary my-2 fs-5 py-2" onClick={() => CheckIsPayed()}>Comprobar pago</button>
             </div>
-        </div>
+        </div >
     )
 }

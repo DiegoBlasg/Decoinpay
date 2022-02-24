@@ -73,8 +73,8 @@ export default function ModalMakeTransaction({ modalIsOpen, setIsOpen, getUserTr
                         "wallet": encryptText(recibo.to.toLowerCase())
                     }
                 };
-                await axios.put('/api/users/transactions', transaction, axiosConfigTxnFrom)
-                await axios.put('/api/users/transactions', transaction, axiosConfigTxnTo)
+                await axios.put(`${process.env.REACT_APP_API_URL}/users/transactions`, transaction, axiosConfigTxnFrom)
+                await axios.put(`${process.env.REACT_APP_API_URL}/users/transactions`, transaction, axiosConfigTxnTo)
                 getUserTransactions()
                 getBalance()
             } catch (error) {

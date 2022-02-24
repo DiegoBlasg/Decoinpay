@@ -25,7 +25,7 @@ const useUsers = () => {
                     "wallet": selectedUser.wallet_id
                 }
             };
-            const res = await axios.get('/api/users/transactions', axiosConfig)
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/transactions`, axiosConfig)
             setTransactions(res.data)
         }
     }
@@ -41,7 +41,7 @@ const useUsers = () => {
             wallet_id: walletAdress,
             business_user: false
         }
-        await axios.post('/api/users', newUser, axiosConfig)
+        await axios.post(`${process.env.REACT_APP_API_URL}/users`, newUser, axiosConfig)
         getProfile(walletAdress);
         setLoginState(getShortID(decryptText(walletAdress).toLowerCase()))
 

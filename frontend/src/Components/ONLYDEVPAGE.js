@@ -17,7 +17,7 @@ export default function OnlyDevPage() {
                 api_key: 'fbqiiffj42ezqwq0nz6g1r0wyjzcczjjkkzoqzgflhfphe8ohu'
             }
         }
-        const res = await axios.post("/api/transactions", newTransaction, authorization)
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/transactions`, newTransaction, authorization)
 
         //aqui dirige a https://decoinpay.com/pay/has-de-la-transaccion
         window.location.href = "/pay/" + res.data.hash

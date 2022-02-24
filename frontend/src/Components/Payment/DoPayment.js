@@ -25,7 +25,7 @@ export default function DoPayment() {
                     "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876")
                 }
             };
-            const res = await axios.get('/api/contracts/admin/contractinfo/' + contract_id, axiosConfig)
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/contracts/admin/contractinfo/` + contract_id, axiosConfig)
             setWallet(res.data)
         }
     }
@@ -55,7 +55,7 @@ export default function DoPayment() {
 
                     const newDate = new Date()
 
-                    const currentdate = `${newDate.getFullYear()}-${newDate.getMonth() < 10 ? `0${newDate.getMonth() + 1}` : `${newDate.getMonth() + 1}`}-${newDate.getDate()} ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`
+                    const currentdate = `${newDate.getFullYear()} - ${newDate.getMonth() < 10 ? `0${newDate.getMonth() + 1}` : `${newDate.getMonth() + 1}`} - ${newDate.getDate()} ${newDate.getHours()}: ${newDate.getMinutes()}: ${newDate.getSeconds()}`
 
                     const transaction = {
                         txnHash: tx.hash,
@@ -72,13 +72,13 @@ export default function DoPayment() {
                             "wallet": selectedUser.wallet_id
                         }
                     };
-                    await axios.put('/api/users/transactions', transaction, axiosConfig)
+                    await axios.put(`${process.env.REACT_APP_API_URL}/users/transactions`, transaction, axiosConfig)
 
-                    await axios.put('/api/contracts/transactions/' + contract_id, transaction, { headers: { "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876") } })
+                    await axios.put(`${process.env.REACT_APP_API_URL}/contracts/transactions/` + contract_id, transaction, { headers: { "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876") } })
                     const updateOTransaction = {
                         transactionHash: tx.hash
                     }
-                    await axios.put("/api/transactions/" + txnhash, updateOTransaction, axiosConfig)
+                    await axios.put(`${process.env.REACT_APP_API_URL}/transactions/` + txnhash, updateOTransaction, axiosConfig)
                     window.location.href = "/account"
                 } else {
                     alert("La transaccion no ha sido en la bsc")
@@ -94,7 +94,7 @@ export default function DoPayment() {
 
     }
     const getTransaction = async () => {
-        const res = await axios.get("/api/transactions/admin/" + txnhash)
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/transactions/admin/` + txnhash)
         setAmount(res.data.valueInBNB)
         setContract_id(res.data.contract_id)
         if (contract_id) {

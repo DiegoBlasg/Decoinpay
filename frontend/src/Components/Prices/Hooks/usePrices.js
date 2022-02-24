@@ -26,7 +26,7 @@ const usePrices = () => {
                     "wallet": selectedUser.wallet_id
                 }
             };
-            const res = await axios.get('/api/users/addedtoken', axiosConfig)
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/addedtoken`, axiosConfig)
             setAdded_tokens(res.data)
         }
     }
@@ -38,7 +38,7 @@ const usePrices = () => {
                     "wallet": selectedUser.wallet_id
                 }
             };
-            const res = await axios.get('/api/users/favouritetoken/', axiosConfig)
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/favouritetoken/`, axiosConfig)
             setFavourites_tokens(res.data)
         }
     }
@@ -70,7 +70,7 @@ const usePrices = () => {
                 const NewToken = {
                     token_contract: specificCoin
                 }
-                await axios.put('/api/users/addedtoken', NewToken, axiosConfig)
+                await axios.put(`${process.env.REACT_APP_API_URL}/users/addedtoken`, NewToken, axiosConfig)
                 window.location.href = '/'
             } catch (error) {
                 if (error.response.status == 493) {
@@ -92,7 +92,7 @@ const usePrices = () => {
             );
             if (opcion === true) {
 
-                await axios.delete('/api/users/addedtoken/' + tokenid, axiosConfig)
+                await axios.delete(`${process.env.REACT_APP_API_URL}/users/addedtoken/` + tokenid, axiosConfig)
                 window.location.href = '/'
             }
         }
@@ -115,7 +115,7 @@ const usePrices = () => {
                     "wallet": selectedUser.wallet_id
                 }
             };
-            await axios.delete('/api/users/favouritetoken/' + tokenid, axiosConfig)
+            await axios.delete(`${process.env.REACT_APP_API_URL}/users/favouritetoken/` + tokenid, axiosConfig)
             setIsFavourite(false)
         }
     }
@@ -131,7 +131,7 @@ const usePrices = () => {
                 const NewTokenFavourite = {
                     token_id: tokenid
                 }
-                await axios.put('/api/users/favouritetoken', NewTokenFavourite, axiosConfig)
+                await axios.put(`${process.env.REACT_APP_API_URL}/users/favouritetoken`, NewTokenFavourite, axiosConfig)
                 setIsFavourite(true)
             } catch (error) {
                 alert(error.response.data.mensaje)

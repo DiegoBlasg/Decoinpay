@@ -57,20 +57,20 @@ export default function OnlinePaymentForm() {
                 "wallet": encryptText(walletAdress.toLowerCase())
             }
         };
-        await axios.put('/api/users/transactions', newtransaction, axiosConfig)
+        await axios.put(`${process.env.REACT_APP_API_URL}/users/transactions`, newtransaction, axiosConfig)
 
-        await axios.put('/api/contracts/transactions/' + transaction.contract_id, newtransaction, { headers: { "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876") } })
+        await axios.put(`${process.env.REACT_APP_API_URL}/contracts/transactions/` + transaction.contract_id, newtransaction, { headers: { "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876") } })
 
         const updateOTransaction = {
             transactionHash: tx.hash
         }
-        await axios.put("/api/transactions/" + hash, updateOTransaction, axiosConfig)
+        await axios.put(`${process.env.REACT_APP_API_URL}/transactions/` + hash, updateOTransaction, axiosConfig)
 
         window.location.href = transaction.return_url
     }
 
     const getTransaction = async () => {
-        const res = await axios.get("/api/transactions/" + hash)
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/transactions/` + hash)
         setTransaction(res.data)
         getPriceOfValue(res.data.valueInBNB)
     }
@@ -92,9 +92,9 @@ export default function OnlinePaymentForm() {
                 <div className="d-flex justify-content-center">
                     <span className="bg-dark border border-3 border-white text-white">
                         <QRCode value={`https://decoinpay.com/dopayment/${hash}`} />
-                    </span>
-                </div>
-            </div>
+                    </span >
+                </div >
+            </div >
 
             <div className="row shadow mb-4 bg-dark rounded p-3 mx-2 text-center">
                 <div>
@@ -109,7 +109,7 @@ export default function OnlinePaymentForm() {
                 <button className="btn btn-primary my-2 mx-4" onClick={() => window.location.href = transaction.cancel_url}>Cancelar</button>
                 <button className="btn btn-primary my-2 mx-4" onClick={onSubmit}>Pagar</button>
             </div>
-        </div>
+        </div >
 
     )
 }

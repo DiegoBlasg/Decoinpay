@@ -20,7 +20,7 @@ const useContract = (url_id) => {
                     "wallet": selectedUser.wallet_id
                 }
             };
-            const res = await axios.get('/api/contracts', axiosConfig)
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/contracts`, axiosConfig)
             setContracts(res.data)
         }
     }
@@ -32,7 +32,7 @@ const useContract = (url_id) => {
                         "wallet": selectedUser.wallet_id
                     }
                 };
-                const res = await axios.get('/api/contracts/contractinfo/' + url_id, axiosConfig)
+                const res = await axios.get(`${process.env.REACT_APP_API_URL}/contracts/contractinfo/` + url_id, axiosConfig)
                 if (res.data.allowed_users) {
                     setIsOwner(true)
                 }
@@ -54,7 +54,7 @@ const useContract = (url_id) => {
                         "wallet": selectedUser.wallet_id
                     }
                 };
-                const res = await axios.get('/api/contracts/' + url_id, axiosConfig)
+                const res = await axios.get(`${process.env.REACT_APP_API_URL}/contracts/` + url_id, axiosConfig)
                 setOneContractInArray([res.data])
                 setContracts(res.data)
                 setTransactions(res.data.transactions)
@@ -78,7 +78,7 @@ const useContract = (url_id) => {
             const newContract = {
                 name: name
             }
-            await axios.post('/api/contracts', newContract, axiosConfig)
+            await axios.post(`${process.env.REACT_APP_API_URL}/contracts`, newContract, axiosConfig)
         }
     }
 
@@ -94,7 +94,7 @@ const useContract = (url_id) => {
                 const updateContract = {
                     name: name,
                 }
-                await axios.put('/api/contracts/' + url_id, updateContract, axiosConfig)
+                await axios.put(`${process.env.REACT_APP_API_URL}/contracts/` + url_id, updateContract, axiosConfig)
             }
         } catch (error) {
             alert("No puedes modificar este contrato")
@@ -109,11 +109,11 @@ const useContract = (url_id) => {
                     "wallet": selectedUser.wallet_id
                 }
             };
-            const contract = await axios.get('/api/contracts/' + id, axiosConfig)
+            const contract = await axios.get(`${process.env.REACT_APP_API_URL}/contracts/` + id, axiosConfig)
             for (let i = 0; i < contract.data.allowed_users.length; i++) {
-                await axios.delete('/api/users/contratwithaccess/' + id, { headers: { "wallet": encryptText(contract.data.allowed_users[i].wallet_id) } })
+                await axios.delete(`${process.env.REACT_APP_API_URL}/users/contratwithaccess/` + id, { headers: { "wallet": encryptText(contract.data.allowed_users[i].wallet_id) } })
             }
-            await axios.delete('/api/contracts/' + id, axiosConfig)
+            await axios.delete(`${process.env.REACT_APP_API_URL}/contracts/` + id, axiosConfig)
             getContracts()
         }
     }
@@ -126,8 +126,8 @@ const useContract = (url_id) => {
                     "wallet": selectedUser.wallet_id
                 }
             };
-            await axios.delete('/api/contracts/alloweduser/' + url_id + "/" + id, axiosConfig)
-            await axios.delete('/api/users/contratwithaccess/' + url_id, { headers: { "wallet": encryptText(wallet.toLowerCase()) } })
+            await axios.delete(`${process.env.REACT_APP_API_URL}/contracts/alloweduser/` + url_id + "/" + id, axiosConfig)
+            await axios.delete(`${process.env.REACT_APP_API_URL}/users/contratwithaccess/` + url_id, { headers: { "wallet": encryptText(wallet.toLowerCase()) } })
         }
     }
 

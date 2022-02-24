@@ -52,7 +52,7 @@ export default function ModalReceiveTransaction({ modalIsOpen, setIsOpen, contra
             const newTransaction = {
                 valueInBNB: value
             }
-            const res = await axios.post("/api/transactions/admin/" + contractid, newTransaction, axiosConfig)
+            const res = await axios.post(`${process.env.REACT_APP_API_URL}/transactions/admin/` + contractid, newTransaction, axiosConfig)
             console.log(res);
             window.location.href = "/recivepayment/" + res.data.hash
         }
