@@ -182,10 +182,6 @@ export default function CoinInfo(props) {
 
                             </div>
                         </div>
-                        <div className="d-flex justify-content-center align-items-center my-5 shadow p-3 mb-5 bg-dark rounded" onClick={() => cambiarvalor()}>
-                            <h4 className="text-white">Trade</h4>
-                            <i className="bi bi-caret-down-fill text-white mx-2 fs-4"></i>
-                        </div>
                         {
                             showTrade ?
                                 <div className="d-flex justify-content-center align-items-center" >
