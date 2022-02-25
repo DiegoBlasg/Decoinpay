@@ -1,5 +1,7 @@
 # Decoinpay
 Decoinpay, una aplicación web, que permite a las empresas aceptar pagos con criptomonedas en sus establecimientos, ya sean físicos u online.<br><br>
+La página web es accesible a través del siguiente enlace:<br><br>
+https://decoinpay.com<br><br>
 Con esta plataforma podrán:
 * Tener un control de las transacciones que han recibido separándolas por bloques (Contratos) para una mayor organización.
 * Ver el precio de todas las criptomonedas existentes dentro de la blockchain y poder añadir las que necesiten a una lista de seguimiento.
