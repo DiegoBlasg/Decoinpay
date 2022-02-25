@@ -11,9 +11,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@main
-
-      - name: move to Decoinpay
-        run: cd Decoinpay
         
       - name: Stop docker-compose
         run: docker-compose stop
