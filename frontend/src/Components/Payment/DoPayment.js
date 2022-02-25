@@ -55,7 +55,7 @@ export default function DoPayment() {
 
                     const newDate = new Date()
 
-                    const currentdate = `${newDate.getFullYear()} - ${newDate.getMonth() < 10 ? `0${newDate.getMonth() + 1}` : `${newDate.getMonth() + 1}`} - ${newDate.getDate()} ${newDate.getHours()}: ${newDate.getMinutes()}: ${newDate.getSeconds()}`
+                    const currentdate = `${newDate.getFullYear()}-${newDate.getMonth() < 10 ? `0${newDate.getMonth() + 1}` : `${newDate.getMonth() + 1}`}-${newDate.getDate()} ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`
 
                     const transaction = {
                         txnHash: tx.hash,

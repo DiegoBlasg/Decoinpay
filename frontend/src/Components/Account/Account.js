@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import UserContext from '../../Context/User/UserContext';
 import useUsers from '../Hooks/useUsers'
+import TransactionsFilter from '../TransactionsFilter';
 import ModalMakeTransaction from './Modals/ModalMakeTransaction';
 
 export default function Account(props) {
@@ -8,6 +9,7 @@ export default function Account(props) {
   const { selectedUser } = useContext(UserContext);
 
   const [search, setSearch] = useState("");
+  const [filterDate, setFilterDate] = useState(["", "", ""]);
 
   const { getUserTransactions, transactions, getBalance, balance } = useUsers();
   const [modalMakeTransactionIsOpen, setModalMakeTransactionIsOpen] = useState(false);
@@ -17,10 +19,13 @@ export default function Account(props) {
   }
 
   const filteredTransactions = transactions.filter((transaction) =>
-    transaction.hash.toLowerCase().includes(search.toLowerCase()) ||
-    transaction.block.toLowerCase().includes(search.toLowerCase()) ||
-    transaction.from.toLowerCase().includes(search.toLowerCase()) ||
-    transaction.to.toLowerCase().includes(search.toLowerCase())
+    (transaction.hash.toLowerCase().includes(search.toLowerCase()) ||
+      transaction.block.toLowerCase().includes(search.toLowerCase()) ||
+      transaction.from.toLowerCase().includes(search.toLowerCase()) ||
+      transaction.to.toLowerCase().includes(search.toLowerCase())) && (
+      transaction.age.substring(0, 4).includes(filterDate[0]) &&
+      transaction.age.substring(5, 7).includes(filterDate[1]) &&
+      transaction.age.substring(8, 10).includes(filterDate[2]))
   )
   React.useEffect(() => {
     getUserTransactions()
@@ -59,11 +64,10 @@ export default function Account(props) {
         </>
       }
 
-      <div className="row pb-5 pt-4">
-        <form className="d-flex">
-          <input className="form-control me-2" style={{ height: "50px" }} onChange={e => setSearch(e.target.value)} type="search" placeholder="Search" aria-label="Search" />
-        </form>
-      </div>
+
+      <TransactionsFilter isPhone={props.isPhone} setFilterDate={setFilterDate} setSearch={setSearch} />
+
+
       <div className="row">
         <div className="table-responsive">
           <table className="table table-dark table-striped">
