@@ -131,12 +131,6 @@ export default function CoinInfo(props) {
                                 <input type="number" id="dol" className="form-control bg-dark text-white mx-2" onKeyUp={(e) => cambiarcoinvalor(e.target.value)} />
                             </div>
                         </div>
-                        <div className="row my-5 shadow p-3 mb-5 bg-dark rounded" onClick={() => cambiarvalor()}>
-                            <div className="d-flex align-items-center justify-content-center">
-                                <h4 className="text-white">Trade</h4>
-                                <i className="bi bi-caret-down-fill text-white mx-2 fs-4"></i>
-                            </div>
-                        </div>
                         {
                             showTrade ?
                                 <div className="d-flex mb-5 justify-content-center align-items-center" >

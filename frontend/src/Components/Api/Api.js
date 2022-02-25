@@ -31,7 +31,7 @@ export default function Api() {
                 paymentAddress ?
                     <div className="shadow mb-4 bg-dark rounded p-3 text-center text-white py-4">
                         <h5 className="my-2">Este es el link al que se deberá redireccionar al usuario para que realice la transacción</h5>
-                        <h4>www.decoinpay.com/dopayment/<font className="text-success ">has-de-la-transaccion</font></h4>
+                        <h4>www.decoinpay.com/dopayment/<font className="text-success ">id-de-la-transaccion</font></h4>
                     </div>
                     :
                     <></>
@@ -45,6 +45,9 @@ export default function Api() {
                     <div className="shadow mb-4 bg-dark rounded p-3 text-white text-start">
                         <div className="d-flex justify-content-center">
                             <div>
+                                <h4>_id:
+                                    <font className="text-success fs-4 mx-2">String</font>
+                                </h4>
                                 <h4>contract_id:
                                     <font className="text-success fs-4 mx-2">String</font>
                                 </h4>
