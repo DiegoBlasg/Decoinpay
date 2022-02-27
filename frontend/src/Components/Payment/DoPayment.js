@@ -45,7 +45,7 @@ export default function DoPayment() {
                     value: ethers.utils.parseEther(amount)
                 })
                 await tx.wait();
-                if (tx.chainId == ID_BLOCKCHAIN_BSC) {
+               // if (tx.chainId == ID_BLOCKCHAIN_BSC) {
                     const recibo = await provider.getTransactionReceipt(tx.hash)
                     const value = tx.value._hex.substring(2)
                     const value2 = ethers.utils.formatEther(parseInt(value, 16).toString())
@@ -80,9 +80,9 @@ export default function DoPayment() {
                     }
                     await axios.put(`${process.env.REACT_APP_API_URL}/transactions/` + txnhash, updateOTransaction, axiosConfig)
                     window.location.href = "/account"
-                } else {
+               /* } else {
                     alert("La transaccion no ha sido en la bsc")
-                }
+                }*/
             } catch (error) {
                 console.log(error);
                 alert("Algo ha salido mal")
