@@ -12,7 +12,7 @@ services:
     environment:
       - REACT_APP_PASSWORD=4321
       - REACT_APP_ADMIN_PASSWORD=9876
-      - REACT_APP_API_URL = /api
+      - REACT_APP_API_URL=/api
   api-server:
     container_name: api-server
     build: ./backend
