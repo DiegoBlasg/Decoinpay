@@ -50,7 +50,7 @@ export default function Prices(props) {
                     selectedUser ?
                         favourites_tokens ?
                             display == "Rows" ?
-                                <PricesInRows coins={filteredCoins} favouriteTokens={favourites_tokens} />
+                                <PricesInRows coins={filteredCoins} favouriteTokens={favourites_tokens} isPhone={props.isPhone} />
                                 :
                                 <PricesInGrid coins={filteredCoins} favouriteTokens={favourites_tokens} />
                             :

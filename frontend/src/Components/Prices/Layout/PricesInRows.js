@@ -30,9 +30,15 @@ export default function PricesInRows(props) {
                                     <div className="mx-2"><Fav id={coin.id} tokens={props.favouriteTokens} /></div>
                                 </td>
                                 <td style={{ whiteSpace: "nowrap" }}>{coin.market_cap_rank}</td>
-                                <th><Link to={"/coininfo/" + coin.id} className='text-white' style={{ textDecoration: "none", cursor: "pointer" }}>
+                                <th><Link to={"/coininfo/" + coin.id} className='text-white' style={{ textDecoration: "none", cursor: "pointer", whiteSpace: "nowrap" }}>
                                     <img alt="CoinLogo" src={coin.image} style={{ width: "27px" }} className="mx-2" />
-                                    {`${coin.name} (${coin.symbol.toUpperCase()})`}
+                                    {
+                                        props.isPhone ?
+                                            `${coin.symbol.toUpperCase()}`
+                                            :
+                                            `${coin.name} (${coin.symbol.toUpperCase()})`
+
+                                    }
                                     {coin.price_change_percentage_24h > 0 ? <i className="bi bi-graph-up-arrow text-success mx-2" /> : <i className="bi bi-graph-down-arrow text-danger mx-2" />}
                                 </Link></th>
                                 <td style={{ whiteSpace: "nowrap" }}>{formatDollar(coin.current_price, 16)}</td>
