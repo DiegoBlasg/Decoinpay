@@ -30,7 +30,7 @@ services:
     image: mongodb
     restart: always
     volumes:
-      - dbvolume:/data/db
+      - ./Mongodb:/data/db
     ports:
       - "27017:27017"
     logging:
