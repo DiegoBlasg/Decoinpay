@@ -9,7 +9,7 @@ services:
       - "3000:3000"
     logging:
       driver: none
-    env_file: .env
+    env_file: ../.env
   api-server:
     container_name: api-server
     build: ./backend
@@ -17,12 +17,12 @@ services:
       - "4000:4000"
     links:
       - mongo
-    env_file: .env
+    env_file: ../.env
   mongo:
     image: mongodb
     restart: always
     volumes:
-      - ./mongo_data:/data/db
+      - ../mongo_data:/data/db
     ports:
       - "27017:27017"
     logging:
@@ -43,7 +43,7 @@ services:
   letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
     restart: always
-    env_file: .env
+    env_file: ../.env
     volumes:
       - certs:/etc/nginx/certs:rw
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -58,7 +58,7 @@ services:
       - react-app
       - nginx-proxy
       - letsencrypt
-    env_file: .env
+    env_file: ../.env
     restart: always
 volumes:
   certs:
