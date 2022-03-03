@@ -5,7 +5,7 @@ const CryptoJs = require('crypto-js')
 
 
 const decryptText = (text) => {
-    const bytes = CryptoJs.AES.decrypt(text, process.env.PASSWORD || "4321")
+    const bytes = CryptoJs.AES.decrypt(text, process.env.PASSWORD)
     const textoDescifrado = bytes.toString(CryptoJs.enc.Utf8)
     return textoDescifrado.toLowerCase()
 }
@@ -19,7 +19,7 @@ usersCtrl.createUser = async (req, res) => {
                 return
             }
         }
-        if ((process.env.ADMINPASSWORD || "9876") == decryptText(req.header('admin'))) {
+        if ((process.env.ADMINPASSWORD) == decryptText(req.header('admin'))) {
             const { business_user } = req.body;
             const newUser = new User({
                 wallet_id: decryptText(req.header('wallet')),

@@ -59,7 +59,7 @@ export default function OnlinePaymentForm() {
         };
         await axios.put(`${process.env.REACT_APP_API_URL}/users/transactions`, newtransaction, axiosConfig)
 
-        await axios.put(`${process.env.REACT_APP_API_URL}/contracts/transactions/` + transaction.contract_id, newtransaction, { headers: { "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876") } })
+        await axios.put(`${process.env.REACT_APP_API_URL}/contracts/transactions/` + transaction.contract_id, newtransaction, { headers: { "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD) } })
 
         const updateOTransaction = {
             transactionHash: tx.hash

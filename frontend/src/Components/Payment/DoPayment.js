@@ -22,7 +22,7 @@ export default function DoPayment() {
         if (selectedUser) {
             const axiosConfig = {
                 headers: {
-                    "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876")
+                    "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD)
                 }
             };
             const res = await axios.get(`${process.env.REACT_APP_API_URL}/contracts/admin/contractinfo/` + contract_id, axiosConfig)
@@ -45,44 +45,44 @@ export default function DoPayment() {
                     value: ethers.utils.parseEther(amount)
                 })
                 await tx.wait();
-               // if (tx.chainId == ID_BLOCKCHAIN_BSC) {
-                    const recibo = await provider.getTransactionReceipt(tx.hash)
-                    const value = tx.value._hex.substring(2)
-                    const value2 = ethers.utils.formatEther(parseInt(value, 16).toString())
+                // if (tx.chainId == ID_BLOCKCHAIN_BSC) {
+                const recibo = await provider.getTransactionReceipt(tx.hash)
+                const value = tx.value._hex.substring(2)
+                const value2 = ethers.utils.formatEther(parseInt(value, 16).toString())
 
-                    const fee = recibo.gasUsed._hex.substring(2)
-                    const fee2 = ethers.utils.formatEther(parseInt(fee, 16).toString())
+                const fee = recibo.gasUsed._hex.substring(2)
+                const fee2 = ethers.utils.formatEther(parseInt(fee, 16).toString())
 
-                    const newDate = new Date()
+                const newDate = new Date()
 
-                    const currentdate = `${newDate.getFullYear()}-${newDate.getMonth() < 10 ? `0${newDate.getMonth() + 1}` : `${newDate.getMonth() + 1}`}-${newDate.getDate()} ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`
+                const currentdate = `${newDate.getFullYear()}-${newDate.getMonth() < 10 ? `0${newDate.getMonth() + 1}` : `${newDate.getMonth() + 1}`}-${newDate.getDate()} ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`
 
-                    const transaction = {
-                        txnHash: tx.hash,
-                        block: recibo.blockNumber,
-                        dateTime: currentdate,
-                        from: recibo.from.toLowerCase(),
-                        to: recibo.to.toLowerCase(),
-                        value: value2,
-                        txnFee: fee2
+                const transaction = {
+                    txnHash: tx.hash,
+                    block: recibo.blockNumber,
+                    dateTime: currentdate,
+                    from: recibo.from.toLowerCase(),
+                    to: recibo.to.toLowerCase(),
+                    value: value2,
+                    txnFee: fee2
+                }
+
+                const axiosConfig = {
+                    headers: {
+                        "wallet": selectedUser.wallet_id
                     }
+                };
+                await axios.put(`${process.env.REACT_APP_API_URL}/users/transactions`, transaction, axiosConfig)
 
-                    const axiosConfig = {
-                        headers: {
-                            "wallet": selectedUser.wallet_id
-                        }
-                    };
-                    await axios.put(`${process.env.REACT_APP_API_URL}/users/transactions`, transaction, axiosConfig)
-
-                    await axios.put(`${process.env.REACT_APP_API_URL}/contracts/transactions/` + contract_id, transaction, { headers: { "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876") } })
-                    const updateOTransaction = {
-                        transactionHash: tx.hash
-                    }
-                    await axios.put(`${process.env.REACT_APP_API_URL}/transactions/` + txnhash, updateOTransaction, axiosConfig)
-                    window.location.href = "/account"
-               /* } else {
-                    alert("La transaccion no ha sido en la bsc")
-                }*/
+                await axios.put(`${process.env.REACT_APP_API_URL}/contracts/transactions/` + contract_id, transaction, { headers: { "wallet": encryptText(process.env.REACT_APP_ADMIN_PASSWORD) } })
+                const updateOTransaction = {
+                    transactionHash: tx.hash
+                }
+                await axios.put(`${process.env.REACT_APP_API_URL}/transactions/` + txnhash, updateOTransaction, axiosConfig)
+                window.location.href = "/account"
+                /* } else {
+                     alert("La transaccion no ha sido en la bsc")
+                 }*/
             } catch (error) {
                 console.log(error);
                 alert("Algo ha salido mal")

@@ -6,13 +6,13 @@ const CryptoJs = require('crypto-js')
 
 
 const decryptText = (text) => {
-    const bytes = CryptoJs.AES.decrypt(text, process.env.PASSWORD || "4321")
+    const bytes = CryptoJs.AES.decrypt(text, process.env.PASSWORD)
     const textoDescifrado = bytes.toString(CryptoJs.enc.Utf8)
     return textoDescifrado.toLowerCase()
 }
 
 const encryptText = (text) => {
-    const textoCifrado = CryptoJs.AES.encrypt(text, process.env.ADMINPASSWORD || "9876")
+    const textoCifrado = CryptoJs.AES.encrypt(text, process.env.ADMINPASSWORD)
     return textoCifrado
 }
 const apiKeyGenerator = () => {
@@ -88,7 +88,7 @@ contractsCtrl.deleteContracts = async (req, res) => {
 
 contractsCtrl.getAdminContractInfo = async (req, res) => {
     try {
-        if ((process.env.ADMINPASSWORD || "9876") == decryptText(req.header('Wallet'))) {
+        if ((process.env.ADMINPASSWORD) == decryptText(req.header('Wallet'))) {
             const contracts = await Contract.findById(req.params.id);
             res.json(contracts.wallet_id)
         } else {
@@ -249,7 +249,7 @@ contractsCtrl.deleteAllowedUsers = async (req, res) => {
 contractsCtrl.newTransactions = async (req, res) => {
     const { txnHash, block, dateTime, from, to, value, txnFee } = req.body;
 
-    if ((process.env.ADMINPASSWORD || "9876") == decryptText(req.header('Wallet'))) {
+    if ((process.env.ADMINPASSWORD) == decryptText(req.header('Wallet'))) {
         await Contract.findByIdAndUpdate(req.params.id, {
             $push: {
                 transactions: {

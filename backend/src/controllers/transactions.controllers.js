@@ -7,12 +7,12 @@ const CryptoJs = require('crypto-js')
 
 
 const decryptAdminText = (text) => {
-    const bytes = CryptoJs.AES.decrypt(text, process.env.ADMINPASSWORD || "9876")
+    const bytes = CryptoJs.AES.decrypt(text, process.env.ADMINPASSWORD)
     const textoDescifrado = bytes.toString(CryptoJs.enc.Utf8)
     return textoDescifrado.toLowerCase()
 }
 const decryptText = (text) => {
-    const bytes = CryptoJs.AES.decrypt(text, process.env.PASSWORD || "4321")
+    const bytes = CryptoJs.AES.decrypt(text, process.env.PASSWORD)
     const textoDescifrado = bytes.toString(CryptoJs.enc.Utf8)
     return textoDescifrado.toLowerCase()
 }

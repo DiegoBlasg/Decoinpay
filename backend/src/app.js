@@ -3,7 +3,7 @@ const cors = require('cors');
 const app = express();
 
 // settings
-app.set('port', process.env.PORT || 4000)
+app.set('port', process.env.PORT)
 if (process.env.NODE_ENV === "production") {
     app.use(express.static("build"));
 }

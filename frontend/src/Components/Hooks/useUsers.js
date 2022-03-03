@@ -33,7 +33,7 @@ const useUsers = () => {
     const CreateOrGetUserByWallet = async (walletAdress) => {
         const axiosConfig = {
             headers: {
-                "admin": encryptText(process.env.REACT_APP_ADMIN_PASSWORD || "9876"),
+                "admin": encryptText(process.env.REACT_APP_ADMIN_PASSWORD),
                 "wallet": walletAdress
             }
         };
