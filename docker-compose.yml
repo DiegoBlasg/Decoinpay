@@ -19,7 +19,7 @@ services:
       - mongo
     env_file: ../.env
   mongo:
-    image: mongodb
+    image: mongo
     restart: always
     volumes:
       - ../mongo_data:/data/db
