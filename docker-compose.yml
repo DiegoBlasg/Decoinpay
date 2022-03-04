@@ -9,7 +9,10 @@ services:
       - "3000:3000"
     logging:
       driver: none
-    env_file: ../.env
+    environment:
+      - REACT_APP_PASSWORD=4321
+      - REACT_APP_ADMIN_PASSWORD=9876
+      - REACT_APP_API_URL=/api
   api-server:
     container_name: api-server
     build: ./backend
@@ -17,7 +20,12 @@ services:
       - "4000:4000"
     links:
       - mongo
-    env_file: ../.env
+    environment:
+      - MONGODB_URI=mongodb://mongo/cryptopagosdb
+      - PORT=4000
+      - PASSWORD=4321
+      - ADMINPASSWORD=9876
+      - NODE_ENV=production
   mongo:
     image: mongo
     restart: always
@@ -43,7 +51,8 @@ services:
   letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
     restart: always
-    env_file: ../.env
+    environment:
+        - NGINX_PROXY_CONTAINER=nginx-proxy
     volumes:
       - certs:/etc/nginx/certs:rw
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -58,7 +67,9 @@ services:
       - react-app
       - nginx-proxy
       - letsencrypt
-    env_file: ../.env
+    environment: 
+      - VIRTUAL_HOST=decoinpay.com,www.decoinpay.com
+      - LETSENCRYPT_HOST=decoinpay.com,www.decoinpay.com
     restart: always
 volumes:
   certs:
