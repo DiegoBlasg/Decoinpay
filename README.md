@@ -1,3 +1,7 @@
+<p align="center">
+ <img src="frontend/public/img/logoblanco3.png" width="20%"/>
+</p>
+
 # Decoinpay
 Decoinpay fue presentado en la 35ª edición del premio Don Bosco en la categoría de Tecnologías de la Información y la Comunicación, obteniendo finalmente el 2º puesto como mejor proyecto.<br><br>
  
@@ -24,5 +28,9 @@ ADVERTENCIA: aunque el proyecto esté en local, sigue usando criptomonedas reale
  
 ## Recursos
 Aquí dejo la foto del galardón y el diploma del premio recibido y la memoria del proyecto la cual se exigía una cantidad máxima de 25 páginas.<br><br>
-![diploma y galardón](galardon.jpg | width=100)<br><br>
-[MEMORIA](memoria.pdf)
+<p align="center">
+ <img src="galardon.jpg" width="40%"/>
+</p><br><br>
+<p align="center">
+ <a href="memoria.pdf">MEMORIA</a>
+</p>
