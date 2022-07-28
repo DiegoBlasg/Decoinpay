@@ -23,6 +23,6 @@ docker-compose up
 ADVERTENCIA: aunque el proyecto esté en local, sigue usando criptomonedas reales, si lo quieres probar al completo sin gastar tendrás que tener una blockchain local como Ganache.
  
 ## Recursos
-Aquí dejo la foto del galardón y el diploma del premio recibido y la memoria del proyecto la cual se exigía una cantidad máxima de 25 páginas.
-![diploma y galardón](galardon.jpg)<br>
+Aquí dejo la foto del galardón y el diploma del premio recibido y la memoria del proyecto la cual se exigía una cantidad máxima de 25 páginas.<br><br>
+![diploma y galardón](galardon.jpg | width=100)<br><br>
 [MEMORIA](memoria.pdf)
